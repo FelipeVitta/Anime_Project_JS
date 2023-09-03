@@ -1,0 +1,92 @@
+body{
+    margin: 0;
+    overflow-x: hidden; /* escondendo o scroll horizontal */ 
+}
+ 
+
+/* Menu */
+
+.menu-div ul li a{
+    text-decoration: none;
+    color: black;
+    margin: 50px;
+    font-size: 24px;
+}
+
+.menu-div ul li a:hover{
+    color: green;
+}
+
+.menu-div ul{
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.menu-div{
+    background-color: rgb(50, 95, 192);
+    padding: 20px;
+}
+
+#login-but{
+    margin-left: 120px;
+}
+
+/* Body Home Page */
+
+.home-page-body{
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sec{
+    padding: 5px;
+    display: flex;
+    margin-top: 8px;
+    background-color: rgb(17, 50, 197);
+    border-color: black;
+    border-radius: 2px;
+    height: 300px;
+    transition: #374337 3s ease;
+    cursor: pointer;
+    width: 90vw;
+}
+
+.sec:hover {
+background-color: rgb(94, 113, 232);
+transform: scale(1.03);
+}
+
+#ss1{
+    opacity: 1.0;
+    background-image: url(images/gojosatoru.jpg);
+    background-size: cover;
+    justify-content: right;
+    padding-right: 90px;
+}
+
+#ss1 b{
+    padding: 4px;
+    font-size: 50px;
+    font-family:'Times New Roman', Times, serif;
+}
+
+#ss2{
+    opacity: 1.0;
+    background-size: cover;
+    justify-content: right;
+    padding-right: 90px;
+}
+
+
+
+
+
+
+
+
+
