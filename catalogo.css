@@ -1,0 +1,68 @@
+body {
+    margin: 0;
+    overflow-x: hidden;
+    /* escondendo o scroll horizontal */
+    background-color: rgb(50, 95, 192);
+}
+
+
+/* Menu */
+
+.menu-div ul li a {
+    text-decoration: none;
+    color: black;
+    margin: 50px;
+    font-size: 27px;
+    padding: 10px;
+}
+
+.menu-div ul li a:hover {
+    border: 2px;
+    border-radius: 8px;
+    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.7);
+    transition: box-shadow 0.3s ease;
+    background-color: #6272fa;
+    color:rgb(202, 219, 255);
+    
+}
+
+.menu-div ul {
+    list-style: none;
+    display: flex;
+    flex-direction:row;
+    flex-wrap: wrap;
+    align-content: space-around;
+    justify-content: center;
+}
+
+.menu-div {
+    background-color: rgb(50, 95, 192);
+    padding: 20px;
+    border: 1px solid;
+}
+
+#login-but {
+    margin-left: 120px;
+}
+/* LOADER */
+
+.c-loader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    animation: is-rotating 1s infinite;
+    border: 6px solid #e5e5e5;
+    border-radius: 50%;
+    border-top-color: #0a338a;
+    height: 40px;
+    width: 40px;
+  }
+  
+  /* criar animações personalizadas no css */
+  @keyframes is-rotating {
+    /* "to" indica que a transformação será aplicada quando a animação estiver completa. */
+    to {
+        /* rotacionar em 360 (1turn) */
+      transform: rotate(1turn);
+    }
+  }

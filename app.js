@@ -1,5 +1,5 @@
-let login = document.getElementById('login-but');
+let divCatalogo = document.getElementById('ss1');
 
-login.addEventListener('click', () =>{
-    alert('Clicou no botão de login');
-})
+divCatalogo.addEventListener('click', function() {
+    window.location.href = 'catalogo.html';
+});

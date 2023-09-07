@@ -1,41 +1,54 @@
-body{
+body {
     margin: 0;
-    overflow-x: hidden; /* escondendo o scroll horizontal */ 
+    overflow-x: hidden;
+    /* escondendo o scroll horizontal */
+    background-color: rgb(50, 95, 192);
+    margin-bottom: 20px;
 }
- 
+
 
 /* Menu */
 
-.menu-div ul li a{
+.menu-div ul li a {
     text-decoration: none;
     color: black;
     margin: 50px;
-    font-size: 24px;
+    font-size: 27px;
+    padding: 10px;
 }
 
-.menu-div ul li a:hover{
-    color: green;
+.menu-div ul li a:hover {
+    border: 2px;
+    border-radius: 8px;
+    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.7);
+    transition: box-shadow 0.3s ease;
+    background-color: #6272fa;
+    color:rgb(202, 219, 255);
+    
 }
 
-.menu-div ul{
+.menu-div ul {
     list-style: none;
     display: flex;
-    flex-direction: row;
+    flex-direction:row;
+    flex-wrap: wrap;
+    align-content: space-around;
     justify-content: center;
 }
 
-.menu-div{
+.menu-div {
     background-color: rgb(50, 95, 192);
     padding: 20px;
+    border: 1px solid;
 }
 
-#login-but{
+#login-but {
     margin-left: 120px;
 }
 
 /* Body Home Page */
 
-.home-page-body{
+.home-page-body {
     margin: 5px;
     display: flex;
     justify-content: center;
@@ -43,50 +56,62 @@ body{
     flex-direction: column;
 }
 
-.sec{
+.sec {
     padding: 5px;
     display: flex;
     margin-top: 8px;
-    background-color: rgb(17, 50, 197);
+    background-color: rgb(50, 95, 192);
     border-color: black;
     border-radius: 2px;
     height: 300px;
     transition: #374337 3s ease;
     cursor: pointer;
-    width: 90vw;
+    width: 85vw;
+    border: 1px solid;
+    font-family: 'Times New Roman', Times, serif;
+    opacity: 1.0;
+    background-size: cover;
+}
+
+.sec b {
+    font-size: 50px;
 }
 
 .sec:hover {
-background-color: rgb(94, 113, 232);
-transform: scale(1.03);
+    background-color: rgb(94, 113, 232);
+    transform: scale(1.03);
+    transition: background-color 0.2s ease-in;
+    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.7);
+    color:rgb(202, 219, 255);
+    border-color: black;
+    transition: color 0.3 step-end;
 }
 
-#ss1{
-    opacity: 1.0;
-    background-image: url(images/gojosatoru.jpg);
-    background-size: cover;
+#ss1 {
     justify-content: right;
-    padding-right: 90px;
+    padding-right: 120px;
 }
 
-#ss1 b{
-    padding: 4px;
-    font-size: 50px;
-    font-family:'Times New Roman', Times, serif;
+
+#ss2 {
+    justify-content: left;
+    padding-left: 120px;
 }
 
-#ss2{
-    opacity: 1.0;
-    background-size: cover;
+#ss3 {
     justify-content: right;
-    padding-right: 90px;
+    padding-right: 120px;
 }
 
+#ss4 {
+    justify-content: left;
+    padding-left: 120px;
+}
 
-
-
-
-
+#ss5 {
+    justify-content: right;
+    padding-right: 120px;
+}
 
 
 
