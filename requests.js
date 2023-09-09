@@ -60,11 +60,15 @@ function handleResponse(response) {
 //função para printar os dados na tela
 function handleData(response) {
     let div = document.querySelector(".catalogo");
-    let tela = `<H2>POPULARES<H2>`
+    let tela = ``
     response.data.Page.media.map((dado) =>{
-        tela = tela + `<p>${dado.title.romaji}<p>
-        <p>${dado.averageScore}<p>
-        <img src=${dado.coverImage.large}></img>`
+        tela = tela + `
+        <div class="card">
+        <p>${dado.title.romaji}<p>
+        <p>Avaliação: ${dado.averageScore}/100<p>
+        <img src=${dado.coverImage.large}></img>
+        </div>
+        `
     })
     div.innerHTML = tela;
     console.log(response);
