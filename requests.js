@@ -53,11 +53,12 @@ fetch(url, options).then(handleResponse)
 
 function handleResponse(response) {
     return response.json().then(function (json) {
+        //response.ok = se a resposta está no range de 200 - 299
         return response.ok ? json : Promise.reject(json);
     });
 }
 
-//função para printar os dados na tela
+//função para lidar com os dados
 function handleData(response) {
     let div = document.querySelector(".catalogo");
     let tela = ``
