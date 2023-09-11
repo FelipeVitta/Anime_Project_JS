@@ -64,7 +64,7 @@ query ($page: Int, $perPage: Int) {
         let tela = ``
         response.data.Page.media.map((dado) => {
             tela = tela + `
-        <div class="card">
+        <div id="${dado.id}" class="card">
         <div class="card-prev-info">
         <p><b>${dado.title.romaji}</b></p>
         <p>Avaliação: ${dado.averageScore}/100</p>
