@@ -113,5 +113,18 @@ body {
     padding-right: 120px;
 }
 
+/* Menu - Recursividade */
+
+@media screen and (max-width: 1070px){
+    #login-but {
+        margin-left: 0px;
+        margin-right: 20px;
+    }
+}
+
+@media screen and (max-width: 840px){
+   
+}
+
 
 

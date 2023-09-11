@@ -2,9 +2,8 @@ body {
     margin: 0;
     overflow-x: hidden;
     /* escondendo o scroll horizontal */
-    background-color: rgb(50, 95, 192);
+    background-color: #21489e;
 }
-
 
 /* Menu */
 
@@ -38,6 +37,7 @@ body {
     background-color: rgb(50, 95, 192);
     padding: 20px;
     border: 1px solid;
+    margin-bottom: 10px;
 }
 
 #login-but {
@@ -53,7 +53,7 @@ body {
     animation: is-rotating 1s infinite;
     border: 6px solid #e5e5e5;
     border-radius: 50%;
-    border-top-color: #0a338a;
+    border-top-color: #0a43bd;
     height: 40px;
     width: 40px;
   }
@@ -69,30 +69,53 @@ body {
 
   /* Conteúdo */
 
+  .search-button{
+   display: flex;
+   justify-content: center;
+  }
+
+  #src-but{
+    width: 260px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+
   .catalogo{
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     justify-content: center;
-    background-color: #2c66e2;
   }
 
   .card{
     display: inline-block;
-    padding: 2px;
+    color: #ffffff;
     font-size: 20px;
     margin: 15px;
     text-align: center;
     width: 300px;
-    background-color: #1346b3;
-    border: 2px solid;
-    border-radius: 5px;
+    background-color: #102152;
+    border: 3px solid rgb(0, 3, 8);
+    border-radius: 10px;
     font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-bottom: 10px;
   }
 
   .card:hover{
-    background-color: #2cabe2;
+    background-color: #16558f;
     box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.7);
     transform: scale(1.06);
     cursor:pointer;
   }
+
+  .card-prev-info{
+    border-bottom: solid 2px;
+    padding: 5px;
+  }
+
+  .card img{
+    margin-top: 15px;
+  }
+

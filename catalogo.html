@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="catalogo.css">
     <title>Catálogo</title>
 </head>
+
 <body onload="catalogList()">
     <div class="menu-div">
         <ul>
@@ -17,12 +19,20 @@
             <li id="login-but"><a href="">Login</a></li>
         </ul>
     </div>
-    
-        <div class="c-loader" id="loader"> </div>
 
-    <div class="catalogo">
+    <div class="listagem">
+
+        <div class="search-button">
+            <input id="src-but" type="text" name="" placeholder="Qual anime procura?">
+        </div>
+        <div class="c-loader" id="loader"> </div>
+        <div class="catalogo">
+
+        </div>
 
     </div>
+
 </body>
 <script src="requests.js"></script>
+
 </html>

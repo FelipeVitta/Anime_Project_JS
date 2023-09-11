@@ -1,7 +1,7 @@
 
 //Lista os 50 animes mais populares
-function catalogList(){
-var query = `
+function catalogList() {
+    var query = `
 query ($page: Int, $perPage: Int) {
     Page (page: $page, perPage: $perPage) {
       pageInfo {
@@ -26,62 +26,69 @@ query ($page: Int, $perPage: Int) {
   }
 `;
 
-// Definindo o valor das variaveis que serão usadas da nossa query 
-var variables = {
-    page: 1,
-    perPage: 50
-};
-
-// Define the config we'll need for our Api request
-var url = 'https://graphql.anilist.co',
-    options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-            query: query,
-            variables: variables
-        })
+    // Definindo o valor das variaveis que serão usadas da nossa query 
+    var variables = {
+        page: 1,
+        perPage: 50
     };
 
-// Make the HTTP Api request
-fetch(url, options).then(handleResponse)
-                   .then(handleData)
-                   .catch(handleError);
+    // Define the config we'll need for our Api request
+    var url = 'https://graphql.anilist.co',
+        options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({
+                query: query,
+                variables: variables
+            })
+        };
 
-function handleResponse(response) {
-    return response.json().then(function (json) {
-        //response.ok = se a resposta está no range de 200 - 299
-        return response.ok ? json : Promise.reject(json);
-    });
-}
+    // Make the HTTP Api request
+    fetch(url, options).then(handleResponse)
+        .then(handleData)
+        .catch(handleError);
 
-//função para lidar com os dados
-function handleData(response) {
-    let div = document.querySelector(".catalogo");
-    let tela = ``
-    response.data.Page.media.map((dado) =>{
-        tela = tela + `
+    function handleResponse(response) {
+        return response.json().then(function (json) {
+            //response.ok = se a resposta está no range de 200 - 299
+            return response.ok ? json : Promise.reject(json);
+        });
+    }
+
+    //função para lidar com os dados
+    function handleData(response) {
+        let div = document.querySelector(".catalogo");
+        let tela = ``
+        response.data.Page.media.map((dado) => {
+            tela = tela + `
         <div class="card">
-        <p>${dado.title.romaji}<p>
-        <p>Avaliação: ${dado.averageScore}/100<p>
+        <div class="card-prev-info">
+        <p><b>${dado.title.romaji}</b></p>
+        <p>Avaliação: ${dado.averageScore}/100</p>
+        </div>
         <img src=${dado.coverImage.large}></img>
         </div>
         `
-    })
-    div.innerHTML = tela;
-    console.log(response);
-    document.getElementById('loader').style.display = 'none';
+        })
+        div.innerHTML = tela;
+        console.log(response);
+        document.getElementById('loader').style.display = 'none';
+    }
+
+    //função para printar o erro de requisição
+    function handleError(error) {
+        alert('Error, check console');
+        console.error(error);
+    }
+
+
 }
 
-//função para printar o erro de requisição
-function handleError(error) {
-    alert('Error, check console');
-    console.error(error);
-}
+//função quando o usuário pesquina algum anime
+function searchAnime() {
 
-    
 }
 
