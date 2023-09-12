@@ -1,126 +1,128 @@
 body {
-    margin: 0;
-    overflow-x: hidden;
-    /* escondendo o scroll horizontal */
-    background-color: #21489e;
+  margin: 0;
+  overflow-x: hidden;
+  /* escondendo o scroll horizontal */
+  background-color: #21489e;
 }
 
 /* Menu */
 
 .menu-div ul li a {
-    text-decoration: none;
-    color: black;
-    font-size: 27px;
-    padding: 10px;
+  text-decoration: none;
+  color: black;
+  font-size: 27px;
+  padding: 10px;
 }
 
 .menu-div ul li a:hover {
-    border: 2px;
-    border-radius: 8px;
-    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.7);
-    transition: box-shadow 0.3s ease;
-    background-color: #6272fa;
-    color:rgb(225, 235, 255);
-    
+  border: 2px;
+  border-radius: 8px;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.7);
+  transition: box-shadow 0.3s ease;
+  background-color: #6272fa;
+  color: rgb(225, 235, 255);
+
 }
 
 .menu-div ul {
-    list-style: none;
-    display: flex;
-    flex-direction:row;
-    flex-wrap: wrap;
-    align-content: space-around;
-    justify-content: space-between;
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-content: space-around;
+  justify-content: space-between;
 }
 
 .menu-div {
-    background-color: rgb(50, 95, 192);
-    padding: 20px;
-    border: 1px solid;
-    margin-bottom: 10px;
+  background-color: rgb(50, 95, 192);
+  padding: 20px;
+  border: 1px solid;
+  margin-bottom: 10px;
 }
 
 #login-but {
-    margin-left: 120px;
-    margin-right: 30px;
+  margin-left: 120px;
+  margin-right: 30px;
 }
+
 /* LOADER */
 
 .c-loader {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    animation: is-rotating 1s infinite;
-    border: 6px solid #ffffff;
-    border-radius: 50%;
-    border-top-color: #020080;
-    height: 40px;
-    width: 40px;
-  }
-  
-  /* criar animações personalizadas no css */
-  @keyframes is-rotating {
-    /* "to" indica que a transformação será aplicada quando a animação estiver completa. */
-    to {
-        /* rotacionar em 360 (1turn) */
-      transform: rotate(1turn);
-    }
-  }
+  display: inline-block;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  animation: is-rotating 1s infinite;
+  border: 6px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: #020080;
+  height: 40px;
+  width: 40px;
+}
 
-  /* Conteúdo */
+/* criar animações personalizadas no css */
+@keyframes is-rotating {
 
-  .search-button{
-   display: flex;
-   justify-content: center;
-   margin-bottom: 15px;
-   margin-top: 20px;
+  /* "to" indica que a transformação será aplicada quando a animação estiver completa. */
+  to {
+    /* rotacionar em 360 (1turn) */
+    transform: rotate(1turn);
   }
+}
 
-  #src-but{
-    width: 260px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-  }
+/* Conteúdo */
 
-  .catalogo{
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: center;
-  }
+.search-button {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+  margin-top: 20px;
+}
 
-  .card{
-    display: inline-block;
-    color: #e2e2e2;
-    font-size: 20px;
-    margin: 15px;
-    text-align: center;
-    width: 300px;
-    background-color: #102152;
-    border: 3px solid rgb(0, 3, 8);
-    border-radius: 10px;
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    padding-bottom: 10px;
-  }
+#src-but {
+  width: 260px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
 
-  .card:hover{
-    background-color: #3a6c9b;
-    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.7);
-    transform: scale(1.06);
-    cursor:pointer;
-    color: #ffffff;
-  }
+.catalogo {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+}
 
-  .card-prev-info{
-    background-color: #161616;
-    border-bottom: solid 1px;
-    border-color: #3b3b3b;
-    padding: 5px;
-  }
+.card {
+  display: inline-block;
+  color: #e2e2e2;
+  font-size: 20px;
+  margin: 15px;
+  text-align: center;
+  width: 300px;
+  background-color: #102152;
+  border: 3px solid rgb(0, 3, 8);
+  border-radius: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding-bottom: 10px;
+}
 
-  .card img{
-    margin-top: 15px;
-  }
+.card:hover {
+  background-color: #3a6c9b;
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.7);
+  transform: scale(1.06);
+  cursor: pointer;
+  color: #ffffff;
+}
 
+.card-prev-info {
+  background-color: #161616;
+  border-bottom: solid 1px;
+  border-color: #3b3b3b;
+  padding: 5px;
+}
+
+.card img {
+  margin-top: 15px;
+}
