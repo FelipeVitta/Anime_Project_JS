@@ -17,27 +17,26 @@ body {
 .menu-div ul li a:hover {
   border: 2px;
   border-radius: 8px;
-  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.7);
+  box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.7);
   transition: box-shadow 0.3s ease;
   background-color: #6272fa;
-  color: rgb(225, 235, 255);
-
+  color:rgb(231, 238, 252);
+  
 }
 
 .menu-div ul {
   list-style: none;
   display: flex;
-  flex-direction: row;
+  flex-direction:row;
   flex-wrap: wrap;
   align-content: space-around;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 
 .menu-div {
   background-color: rgb(50, 95, 192);
   padding: 20px;
   border: 1px solid;
-  margin-bottom: 10px;
 }
 
 #login-but {
@@ -102,16 +101,17 @@ body {
   text-align: center;
   width: 300px;
   background-color: #102152;
-  border: 3px solid rgb(0, 3, 8);
+  border: 3px solid rgb(0, 0, 0);
   border-radius: 10px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding-bottom: 10px;
 }
 
 .card:hover {
-  background-color: #3a6c9b;
+  background-color: #133c63;
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.7);
   transform: scale(1.06);
+  transition: transform 0.2s ease;
   cursor: pointer;
   color: #ffffff;
 }
@@ -119,6 +119,7 @@ body {
 .card-prev-info {
   background-color: #161616;
   border-bottom: solid 1px;
+  border-radius: 5px;
   border-color: #3b3b3b;
   padding: 5px;
 }

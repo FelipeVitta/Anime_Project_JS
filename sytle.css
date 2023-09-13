@@ -32,7 +32,7 @@ body {
     flex-direction:row;
     flex-wrap: wrap;
     align-content: space-around;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 
 .menu-div {
