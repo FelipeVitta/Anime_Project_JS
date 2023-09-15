@@ -17,17 +17,17 @@ body {
 .menu-div ul li a:hover {
   border: 2px;
   border-radius: 8px;
-  box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.7);
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.7);
   transition: box-shadow 0.3s ease;
   background-color: #6272fa;
-  color:rgb(231, 238, 252);
-  
+  color: rgb(231, 238, 252);
+
 }
 
 .menu-div ul {
   list-style: none;
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
   flex-wrap: wrap;
   align-content: space-around;
   justify-content: space-evenly;
@@ -69,22 +69,117 @@ body {
   }
 }
 
-/* Conteúdo */
+/* CONTEÚDO */
 
-.search-button {
+/* FILTRAGEM DE ANIMES */
+
+.search-div {
   display: flex;
   justify-content: center;
+  flex-wrap: wrap;
   margin-bottom: 15px;
-  margin-top: 20px;
+  padding: 15px;
+  color: white;
 }
+
+.search-div label {
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+/* input de pesquisa */
 
 #src-but {
   width: 260px;
+  height: 25px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
+  background-color: #161616;
+  color: #ffffff;
 }
+
+.src-input {
+  flex-grow: 0.1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* filtragem por gênero */
+
+.genre-selecion {
+  flex-basis: 15%;
+}
+
+#genre {
+  width: 130px;
+  height: 35px;
+  border-radius: 5px;
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 20px;
+}
+
+
+option{
+  color: #ffffff;
+  background-color: #000000;
+}
+
+.center-select{
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1200px){
+
+  .genre-selecion {
+    flex-basis: 25%;
+    margin-right: 10px;
+  }
+
+}
+
+/* filtragem por máximo de episódios */
+
+#max-eps-input {
+  width: 100px;
+  color: #ffffff;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 15px;
+  background-color: #161616;
+}
+
+.max-eps-selecion {
+  text-align: center;
+  flex-basis: 15%;
+}
+
+.center-max-eps {
+  display: flex;
+  justify-content: center;
+}
+
+.center-label-eps {
+  display: flex;
+  justify-content: center;
+}
+
+@media screen and (max-width: 1200px){
+
+  .max-eps-selecion {
+    flex-basis: 25%;
+    margin-left: 10px;
+  }
+
+}
+
+/* LISTAGEM DE ANIMES */
 
 .catalogo {
   display: flex;
@@ -108,7 +203,7 @@ body {
 }
 
 .card:hover {
-  background-color: #133c63;
+  background-color: #05174b;
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.7);
   transform: scale(1.06);
   transition: transform 0.2s ease;
@@ -127,3 +222,4 @@ body {
 .card img {
   margin-top: 15px;
 }
+

@@ -22,12 +22,42 @@
 
     <div class="listagem">
 
-        <div class="search-button">
-            <input id="src-but" type="text" name="" placeholder="Qual anime procura?" onkeydown="searchAnime(event)"/>
+        <div class="search-div">
+            <!-- Select para filtragem por genero -->
+            <div class="genre-selecion">
+                <label for="genero">Genero</label>
+                <div class="center-select">
+                <select id="genre">
+                    <option value="acao">Selecione...</option>
+                    <option value="acao">Ação</option>
+                    <option value="aventura">Aventura</option>
+                    <option value="comedia">Comédia</option>
+                    <option value="drama">Drama</option>
+                    <option value="ficcao">Ficção Científica</option>
+                </select>
+            </div>
+            </div>
+
+            <!-- Input de pesquisa por anime -->
+            <div class="src-input">
+                <input id="src-but" type="text" name="" placeholder="Qual anime procura?"
+                    onkeydown="searchAnime(event)" />
+            </div>
+            <!-- Input número máximo de episódios -->
+            <div class="max-eps-selecion">
+                <div class="center-max-eps">
+                    <label> Máximo de episódios </label>
+                </div>
+                <div class="center-max-eps">
+                    <input id="max-eps-input" type="number" name="" placeholder="Número máximo de episódios"
+                        onkeydown="searchAnime(event)" />
+                </div>
+            </div>
         </div>
         <div class="c-loader" id="loader"> </div>
-        <div class="catalogo">
 
+        <div class="catalogo">
+            <!-- div para a listagem dos cards -->
         </div>
 
     </div>

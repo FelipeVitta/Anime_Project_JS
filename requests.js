@@ -70,13 +70,14 @@ function catalogList() {
     // Definindo o valor das variaveis que serão usadas da nossa query 
     let variables = {
         page: 1,
-        perPage: 50
+        perPage: 50,
     };
 
     makeGraphQLRequest(query, variables)
         .then(function (response) {
             let tela = ``;
             loader.style.display = 'inline-block';
+            console.log(response.data.Page.pageInfo.total);
             response.data.Page.media.map((dado) => {
                 tela = tela + `
             <div id="${dado.id}" class="card">
