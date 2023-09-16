@@ -91,7 +91,7 @@ body {
 }
 
 .sec:hover {
-    background-color: #00252e;
+    background-color: #002c2c;
     transform: scale(1.03);
     transition: background-color 0.2s ease-in;
     box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.7);

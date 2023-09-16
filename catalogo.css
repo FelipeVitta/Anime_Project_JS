@@ -60,7 +60,7 @@ body {
   animation: is-rotating 1s infinite;
   border: 6px solid #ffffff;
   border-radius: 50%;
-  border-top-color: #020080;
+  border-top-color: #002c3a;
   height: 40px;
   width: 40px;
 }
@@ -125,8 +125,8 @@ body {
   width: 130px;
   height: 35px;
   border-radius: 5px;
-  background-color: #000000;
-  color: #ffffff;
+  background-color: #1b1b1b;
+  color: #e0e0e0;
   font-size: 20px;
 }
 
