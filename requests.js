@@ -147,6 +147,7 @@ function searchAnime(event) {
                     let tela = ``
                     let tempo = 2000;
                     if (response.data.Page.media.length === 0) {
+                        document.body.style.background = "#024c4e";
                         bodyCatalog.innerHTML = `<h1>Desculpe, não foi encontrado nenhum anime :( </h1>`
                         loader.style.display = 'none';
                     } else {
@@ -164,7 +165,8 @@ function searchAnime(event) {
                         bodyCatalog.innerHTML = tela;
                         console.log(response);
                         loader.style.display = 'none';
-
+                        document.body.style.background = "linear-gradient(to right top, #0a2674, #145046)";
+                        
                     }
                 })
 
