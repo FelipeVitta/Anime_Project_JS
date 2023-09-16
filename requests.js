@@ -105,6 +105,9 @@ function catalogList() {
 function searchAnime(event) {
     if (event.key === "Enter") {
         let anime = srcInput.value;
+        bodyCatalog.innerHTML = '';
+        document.body.style.background = "#024c4e";
+        loader.style.display = 'inline-block';
         //Se nada foi digitado, listar os animes novamente
         if (anime.length === 0) {
             catalogList();
@@ -142,8 +145,6 @@ function searchAnime(event) {
 
             makeGraphQLRequest(query, variables)
                 .then(function (response) {
-                    bodyCatalog.innerHTML = '';
-                    loader.style.display = 'inline-block';
                     let tela = ``
                     let tempo = 2000;
                     if (response.data.Page.media.length === 0) {
@@ -166,7 +167,7 @@ function searchAnime(event) {
                         console.log(response);
                         loader.style.display = 'none';
                         document.body.style.background = "linear-gradient(to right top, #0a2674, #145046)";
-                        
+
                     }
                 })
 
