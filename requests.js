@@ -92,11 +92,13 @@ function catalogList() {
             bodyCatalog.innerHTML = tela;
             console.log(response);
             loader.style.display = 'none';
+            document.body.style.background = "linear-gradient(to right top, #0a2674, #145046)";
             // console.log(response.data.Page.pageInfo.currentPage);
         })
         .catch(function (error) {
             console.error(error);
         });
+
 }
 
 //Função para filtrar animes de acordo com a pesquisa

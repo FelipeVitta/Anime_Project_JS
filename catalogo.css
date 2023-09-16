@@ -2,14 +2,23 @@ body {
   margin: 0;
   overflow-x: hidden;
   /* escondendo o scroll horizontal */
-  background-color: #21489e;
+  background-color: #043d2f;
 }
 
+::-webkit-scrollbar {
+  width: 15px; /* Aumente a largura para facilitar a seleção */
+  background: #005043;
+}
+
+::-webkit-scrollbar-thumb{
+  background: #013f37;
+  border: solid 2px;
+}
 /* Menu */
 
 .menu-div ul li a {
   text-decoration: none;
-  color: black;
+  color: rgb(201, 201, 201);
   font-size: 27px;
   padding: 10px;
 }
@@ -17,11 +26,7 @@ body {
 .menu-div ul li a:hover {
   border: 2px;
   border-radius: 8px;
-  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.7);
-  transition: box-shadow 0.3s ease;
-  background-color: #6272fa;
-  color: rgb(231, 238, 252);
-
+  text-shadow: 0 0 10px #d8d8d8, 0 0 20px #d8d8d8, 0 0 30px #d8d8d8;
 }
 
 .menu-div ul {
@@ -34,16 +39,17 @@ body {
 }
 
 .menu-div {
-  background-color: rgb(50, 95, 192);
+  background-color: #161616;
   padding: 20px;
   border: 1px solid;
+  max-height: 70px;
+  height: 70px;
 }
 
 #login-but {
   margin-left: 120px;
   margin-right: 30px;
 }
-
 /* LOADER */
 
 .c-loader {
@@ -76,6 +82,7 @@ body {
 .search-div {
   display: flex;
   justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   margin-bottom: 15px;
   padding: 15px;
@@ -195,7 +202,7 @@ option{
   margin: 15px;
   text-align: center;
   width: 300px;
-  background-color: #102152;
+  background: linear-gradient(to bottom, #16584f, #114b42);
   border: 3px solid rgb(0, 0, 0);
   border-radius: 10px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
