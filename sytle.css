@@ -2,49 +2,61 @@ body {
     margin: 0;
     overflow-x: hidden;
     /* escondendo o scroll horizontal */
-    background-color: rgb(50, 95, 192);
+    background: linear-gradient(to right top, #0a2674, #145046);
     margin-bottom: 20px;
 }
+
+:root{
+    --cor-preto: #161616;
+}
+
+::-webkit-scrollbar {
+    width: 15px; /* Aumente a largura para facilitar a seleção */
+    background: #005043;
+  }
+  
+  ::-webkit-scrollbar-thumb{
+    background: #013f37;
+    border: solid 2px;
+  }
 
 
 /* Menu */
 
 .menu-div ul li a {
     text-decoration: none;
-    color: black;
+    color: rgb(201, 201, 201);
     font-size: 27px;
     padding: 10px;
-}
-
-.menu-div ul li a:hover {
+  }
+  
+  .menu-div ul li a:hover {
     border: 2px;
     border-radius: 8px;
-    box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.7);
-    transition: box-shadow 0.3s ease;
-    background-color: #6272fa;
-    color:rgb(231, 238, 252);
-    
-}
-
-.menu-div ul {
+    text-shadow: 0 0 10px #d8d8d8, 0 0 20px #d8d8d8, 0 0 30px #d8d8d8;
+  }
+  
+  .menu-div ul {
     list-style: none;
     display: flex;
-    flex-direction:row;
+    flex-direction: row;
     flex-wrap: wrap;
     align-content: space-around;
     justify-content: space-evenly;
-}
-
-.menu-div {
-    background-color: rgb(50, 95, 192);
+  }
+  
+  .menu-div {
+    background-color: #161616;
     padding: 20px;
     border: 1px solid;
-}
-
-#login-but {
+    max-height: 70px;
+    height: 70px;
+  }
+  
+  #login-but {
     margin-left: 120px;
     margin-right: 30px;
-}
+  }
 
 /* Body Home Page */
 
@@ -60,11 +72,12 @@ body {
     padding: 5px;
     display: flex;
     margin-top: 8px;
-    background-color: rgb(50, 95, 192);
+    background-color: var(--cor-preto);
     border-color: black;
-    border-radius: 2px;
+    border-radius: 10px;
     height: 300px;
     transition: #374337 3s ease;
+    color: #d8d8d8;
     cursor: pointer;
     width: 85vw;
     border: 1px solid;
@@ -78,12 +91,11 @@ body {
 }
 
 .sec:hover {
-    background-color: rgb(94, 113, 232);
+    background-color: #00252e;
     transform: scale(1.03);
     transition: background-color 0.2s ease-in;
     box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.7);
     color:rgb(202, 219, 255);
-    border-color: black;
     transition: color 0.3 step-end;
 }
 

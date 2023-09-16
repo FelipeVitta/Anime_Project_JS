@@ -2,7 +2,7 @@ body {
   margin: 0;
   overflow-x: hidden;
   /* escondendo o scroll horizontal */
-  background-color: #043d2f;
+  background-color: #024c4e;
 }
 
 ::-webkit-scrollbar {
