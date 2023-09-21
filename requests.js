@@ -1,6 +1,28 @@
+
 const bodyCatalog = document.querySelector(".catalogo");
 const loader = document.getElementById('loader');
+const loaderScroll = document.querySelector(".s-loader");
 const srcInput = document.getElementById("src-but");
+
+sessionStorage.setItem('actualPage', 1);
+sessionStorage.setItem('doneRequests', 0);
+
+function setActualQuery(query) {
+    sessionStorage.setItem('actualQuery', query);
+}
+
+function setActualPage(page) {
+    sessionStorage.setItem('actualPage', page);
+}
+
+function setActualVariables(variables) {
+    sessionStorage.setItem('actualVariables', JSON.stringify(variables));
+}
+
+function setDoneRequests(done){
+    sessionStorage.setItem('doneRequests', done);
+}
+
 
 //função para fazer a request
 function makeGraphQLRequest(query, variables) {
@@ -73,6 +95,11 @@ function catalogList() {
         perPage: 50,
     };
 
+    setActualQuery(query);
+    setActualVariables(variables);
+    setActualPage(1);
+    setDoneRequests(0);
+
     makeGraphQLRequest(query, variables)
         .then(function (response) {
             let tela = ``;
@@ -143,14 +170,21 @@ function searchAnime(event) {
                 search: anime
             };
 
+            setActualQuery(query);
+            setActualVariables(variables);
+            setActualPage(1);
+            setDoneRequests(0);
+
             makeGraphQLRequest(query, variables)
                 .then(function (response) {
                     let tela = ``
-                    let tempo = 2000;
                     if (response.data.Page.media.length === 0) {
                         document.body.style.background = "#024c4e";
                         bodyCatalog.innerHTML = `<h1>Desculpe, não foi encontrado nenhum anime :( </h1>`
                         loader.style.display = 'none';
+                        setActualPage(1);
+                        setActualQuery('');
+                        setActualVariables('');
                     } else {
                         response.data.Page.media.map((dado) => {
                             tela = tela + `
@@ -175,3 +209,97 @@ function searchAnime(event) {
     }
 
 }
+
+//Função para incrementar a actualPage e atualizar a page na actualVariables na sessionStorage
+function incrementsPage() {
+
+    //Converte o actualPage em inteiro (garante que seja um inteiro)
+    let actualPage = parseInt(sessionStorage.getItem('actualPage'));
+    //Converte string JSON em um objeto javascript (garante que seja objeto)
+    let variables = JSON.parse(sessionStorage.getItem('actualVariables'));
+
+    // Incrementar a página atual
+    actualPage++;
+    variables.page = actualPage;
+    // Atualizar os valores na sessionStorage
+    // console.log(sessionStorage.getItem('actualVariables'));
+    sessionStorage.setItem('actualPage', actualPage);
+    sessionStorage.setItem('actualVariables', JSON.stringify(variables));
+}
+
+//Função para carregar novos cards na tela
+function loadAdditionalCards() {
+
+    let queryQ = sessionStorage.getItem('actualQuery');
+    let variablesV = sessionStorage.getItem('actualVariables');
+    if (!(queryQ === '') && !(variablesV === '')) {
+        loaderScroll.style.display = "inline-block";
+        incrementsPage();
+        let query = sessionStorage.getItem('actualQuery');
+        let variables = sessionStorage.getItem('actualVariables');
+        makeGraphQLRequest(query, variables).then(function (response) {
+            //checando se ainda tem alguma página de requisição
+            console.log("PAGINA ATUAL " + response.data.Page.pageInfo.currentPage);
+            console.log("PÁGINA FINAL " + response.data.Page.pageInfo.lastPage);
+            if(response.data.Page.pageInfo.currentPage < response.data.Page.pageInfo.lastPage){
+                let newCards = '';
+                response.data.Page.media.map((dado) => {
+                    newCards = newCards + `
+                <div id="${dado.id}" class="card">
+                <div class="card-prev-info">
+                <p><b>${dado.title.romaji}</b></p>
+                <p>Avaliação: ${dado.averageScore}/100</p>
+                </div>
+                <img src=${dado.coverImage.large}></img>
+                </div>
+                `;
+                });
+                bodyCatalog.innerHTML += newCards;
+                console.log(response);
+                // console.log(response.data.Page.pageInfo.currentPage);
+            }else{
+                console.log("Não há mais páginas!!")
+                sessionStorage.setItem('doneRequests', 1);
+            }
+            loaderScroll.style.display = "none";
+        })
+    }
+
+}
+
+// Variável para controlar o estado do debounce
+var canLoadAdditionalCards = true;
+
+//Chamado quando o usuário rola a tela inteira
+window.addEventListener("scroll", function () {
+  // Checando se o usuário scrollou a tela toda e pode carregar mais cartões
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && canLoadAdditionalCards) {
+    // Define canLoadAdditionalCards como false para evitar chamadas adicionais
+    canLoadAdditionalCards = false;
+    let doneRequests = sessionStorage.getItem('doneRequests');
+    console.log("Done requests: " + doneRequests);
+    //checando se não há mais páginas
+    if(!(parseInt(doneRequests))){
+        loadAdditionalCards();
+    }
+    console.log("=============INFOS=============\n")
+    console.log("QUERY: " + sessionStorage.getItem('actualQuery'));
+    console.log("VARIAVEIS: " + sessionStorage.getItem('actualVariables'));
+    console.log("PÁGINA ATUAL: " + sessionStorage.getItem('actualPage'));
+    console.log("\n==============================")
+    console.log('Você chegou ao final da página!');
+
+    // Agende a redefinição de canLoadAdditionalCards para true após 1 segundo
+    setTimeout(function () {
+      canLoadAdditionalCards = true;
+    }, 1000); // 1 segundo em milissegundos
+  }
+});
+
+
+
+
+
+
+
+

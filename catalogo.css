@@ -65,8 +65,31 @@ body {
   width: 40px;
 }
 
+
 /* criar animações personalizadas no css */
 @keyframes is-rotating {
+
+  /* "to" indica que a transformação será aplicada quando a animação estiver completa. */
+  to {
+    /* rotacionar em 360 (1turn) */
+    transform: rotate(1turn);
+  }
+}
+
+.s-loader{
+  display: none;
+  top: 95%;
+  left: 50%;
+  position: fixed;
+  animation: is-rotating2 1s infinite;
+  border: 6px solid #ffffff;
+  border-radius: 50%;
+  border-top-color: #015f28;
+  height: 40px;
+  width: 40px;
+}
+
+@keyframes is-rotating2 {
 
   /* "to" indica que a transformação será aplicada quando a animação estiver completa. */
   to {
@@ -207,6 +230,8 @@ option{
   border-radius: 10px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding-bottom: 10px;
+  transform: scale(1.0);
+  transition: transform 0.2s ease;
 }
 
 .card:hover {
