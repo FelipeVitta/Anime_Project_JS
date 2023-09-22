@@ -9,36 +9,36 @@
 </head>
 
 <body onload="catalogList()">
-    <div class="menu-div">
+    <nav class="menu-div">
         <ul>
             <li><a href="index.html">Início</a></li>
-            <li><a href="">Notícias</a></li>
-            <li><a href="">Minha Lista</a></li>
-            <li><a href="">Recomendados</a></li>
-            <li><a href="">Frases</a></li>
-            <li id="login-but"><a href="">Login</a></li>
+            <li><a href="#">Notícias</a></li>
+            <li><a href="#">Minha Lista</a></li>
+            <li><a href="#">Recomendados</a></li>
+            <li><a href="#">Frases</a></li>
+            <li id="login-but"><a href="#">Login</a></li>
         </ul>
-    </div>
+    </nav>
 
-    <div class="listagem">
+    <main class="listagem">
 
-        <div class="search-div">
+        <section class="search-div">
             <!-- Select para filtragem por genero -->
             <div class="genre-selecion">
                 <label for="genero">Genero</label>
                 <div class="center-select">
-                <select id="genre">
-                    <option value="acao">Selecione...</option>
-                    <option value="acao">Ação</option>
-                    <option value="aventura">Aventura</option>
-                    <option value="comedia">Comédia</option>
-                    <option value="drama">Drama</option>
-                    <option value="ficcao">Fantasia</option>
-                    <option value="ficcao">Terror</option>
-                    <option value="ficcao">Música</option>
-                    <option value="ficcao">Esportes</option>
-                </select>
-            </div>
+                    <select id="genre">
+                        <option value="selecione">Selecione...</option>
+                        <option value="acao">Ação</option>
+                        <option value="aventura">Aventura</option>
+                        <option value="comedia">Comédia</option>
+                        <option value="drama">Drama</option>
+                        <option value="fantasia">Fantasia</option>
+                        <option value="terror">Terror</option>
+                        <option value="musica">Música</option>
+                        <option value="esportes">Esportes</option>
+                    </select>
+                </div>
             </div>
 
             <!-- Input de pesquisa por anime -->
@@ -48,24 +48,24 @@
             </div>
             <!-- Input número máximo de episódios -->
             <div class="max-eps-selecion">
-                <div class="center-max-eps">
-                    <label> Máximo de episódios </label>
-                </div>
-                <div class="center-max-eps">
+                
+                <div class="max-eps-selecion">
+                    <label for="max-eps-input">Máximo de episódios</label>
                     <input id="max-eps-input" type="number" name="" placeholder="Número máximo de episódios"
                         onkeydown="searchAnime(event)" />
                 </div>
             </div>
-        </div>
+        </section>
         <div class="c-loader" id="loader"> </div>
 
         <div class="catalogo">
             <!-- div para a listagem dos cards -->
         </div>
+        <div class="center-s-loader">
+            <div class="s-loader"></div>
+        </div>
 
-        <div class="s-loader"></div>
-
-    </div>
+    </main>
 
 </body>
 <script src="requests.js"></script>

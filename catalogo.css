@@ -77,10 +77,9 @@ body {
 }
 
 .s-loader{
+  align-items: center;
   display: none;
   top: 95%;
-  left: 50%;
-  position: fixed;
   animation: is-rotating2 1s infinite;
   border: 6px solid #ffffff;
   border-radius: 50%;
@@ -96,6 +95,11 @@ body {
     /* rotacionar em 360 (1turn) */
     transform: rotate(1turn);
   }
+}
+
+.center-s-loader{
+  display: flex;
+  justify-content: center;
 }
 
 /* CONTEÚDO */
