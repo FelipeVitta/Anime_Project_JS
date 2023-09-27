@@ -50,7 +50,7 @@ body {
   margin-left: 120px;
   margin-right: 30px;
 }
-/* LOADER */
+/* LOADERS */
 
 .c-loader {
   display: inline-block;
@@ -79,13 +79,14 @@ body {
 .s-loader{
   align-items: center;
   display: none;
-  top: 95%;
+  top: 93.5%;
+  position: fixed;
   animation: is-rotating2 1s infinite;
   border: 6px solid #ffffff;
   border-radius: 50%;
-  border-top-color: #015f28;
-  height: 40px;
-  width: 40px;
+  border-top-color: #002c3a;
+  height: 45px;
+  width: 45px;
 }
 
 @keyframes is-rotating2 {

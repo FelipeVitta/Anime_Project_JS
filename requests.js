@@ -3,6 +3,7 @@ const bodyCatalog = document.querySelector(".catalogo");
 const loader = document.getElementById('loader');
 const loaderScroll = document.querySelector(".s-loader");
 const srcInput = document.getElementById("src-but");
+const genreSelect = document.getElementById("genre");
 
 sessionStorage.setItem('actualPage', 1);
 sessionStorage.setItem('doneRequests', 0);
@@ -95,6 +96,7 @@ function catalogList() {
         perPage: 50,
     };
 
+
     setActualQuery(query);
     setActualVariables(variables);
     setActualPage(1);
@@ -131,6 +133,7 @@ function catalogList() {
 //Função para filtrar animes de acordo com a pesquisa
 function searchAnime(event) {
     if (event.key === "Enter") {
+        console.log("UAII CARALHOO " + genreSelect.value);
         let anime = srcInput.value;
         bodyCatalog.innerHTML = '';
         document.body.style.background = "#024c4e";
@@ -140,35 +143,37 @@ function searchAnime(event) {
             catalogList();
         } else {
             let query = `
-        query ($page: Int, $perPage: Int, $search: String) {
-            Page (page: $page, perPage: $perPage) {
-              pageInfo {
-                total
-                currentPage
-                lastPage
-                hasNextPage
-                perPage
-              }
-              media (type: ANIME, sort: POPULARITY_DESC, search: $search) {
-                id
-                title {
-                  romaji
+            query ($page: Int, $perPage: Int, $search: String, $genre: String) {
+                Page (page: $page, perPage: $perPage) {
+                  pageInfo {
+                    total
+                    currentPage
+                    lastPage
+                    hasNextPage
+                    perPage
+                  }
+                  media (type: ANIME, sort: POPULARITY_DESC, search: $search, genre: $genre) {
+                    id
+                    title {
+                      romaji
+                    }
+                    averageScore
+                    description
+                    coverImage {
+                      large
+                    }
+                  }
                 }
-                averageScore
-                description
-                coverImage{
-                    large
-                }
               }
-            }
-          }
         `;
 
             let variables = {
                 page: 1,
                 perPage: 50,
-                search: anime
+                search: anime,
+                genre: null
             };
+           
 
             setActualQuery(query);
             setActualVariables(variables);
@@ -239,9 +244,8 @@ function loadAdditionalCards() {
         let variables = sessionStorage.getItem('actualVariables');
         makeGraphQLRequest(query, variables).then(function (response) {
             //checando se ainda tem alguma página de requisição
-            console.log("PAGINA ATUAL " + response.data.Page.pageInfo.currentPage);
-            console.log("PÁGINA FINAL " + response.data.Page.pageInfo.lastPage);
-            if(response.data.Page.pageInfo.currentPage < response.data.Page.pageInfo.lastPage){
+            console.log("TAMANHO DA PÁGINA DA REQUEST " + response.data.Page.media.length);
+            if(response.data.Page.media.length > 0){
                 let newCards = '';
                 response.data.Page.media.map((dado) => {
                     newCards = newCards + `
@@ -286,8 +290,8 @@ window.addEventListener("scroll", function () {
     console.log("QUERY: " + sessionStorage.getItem('actualQuery'));
     console.log("VARIAVEIS: " + sessionStorage.getItem('actualVariables'));
     console.log("PÁGINA ATUAL: " + sessionStorage.getItem('actualPage'));
-    console.log("\n==============================")
     console.log('Você chegou ao final da página!');
+    console.log("\n==============================");
 
     // Agende a redefinição de canLoadAdditionalCards para true após 1 segundo
     setTimeout(function () {
