@@ -5,6 +5,7 @@ const loaderScroll = document.querySelector(".s-loader");
 const srcInput = document.getElementById("src-but");
 const genreSelect = document.getElementById("genre");
 
+
 sessionStorage.setItem('actualPage', 1);
 sessionStorage.setItem('doneRequests', 0);
 
@@ -64,9 +65,10 @@ function makeGraphQLRequest(query, variables) {
 
 //Função para listar os animes
 function catalogList() {
+    console.log("GENERO " + genreSelect.value);
     //Definindo a query
     let query = `
-    query ($page: Int, $perPage: Int) {
+    query ($page: Int, $perPage: Int, $genre: String) {
         Page (page: $page, perPage: $perPage) {
           pageInfo {
             total
@@ -75,7 +77,7 @@ function catalogList() {
             hasNextPage
             perPage
           }
-          media (type: ANIME, sort: POPULARITY_DESC) {
+          media (type: ANIME, sort: POPULARITY_DESC, genre: $genre) {
             id
             title {
               romaji
@@ -88,12 +90,12 @@ function catalogList() {
           }
         }
       }
-
 `;
     // Definindo o valor das variaveis que serão usadas da nossa query 
     let variables = {
         page: 1,
         perPage: 50,
+        genre: genreSelect.value !== "none" ? genreSelect.value : null
     };
 
 
@@ -132,8 +134,8 @@ function catalogList() {
 
 //Função para filtrar animes de acordo com a pesquisa
 function searchAnime(event) {
-    if (event.key === "Enter") {
-        console.log("UAII CARALHOO " + genreSelect.value);
+    console.log("GENERO " + genreSelect.value);
+    if (!event || event.key === "Enter") {
         let anime = srcInput.value;
         bodyCatalog.innerHTML = '';
         document.body.style.background = "#024c4e";
@@ -171,7 +173,7 @@ function searchAnime(event) {
                 page: 1,
                 perPage: 50,
                 search: anime,
-                genre: null
+                genre: genreSelect.value !== "none" ? genreSelect.value : null
             };
            
 
