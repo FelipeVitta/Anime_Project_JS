@@ -4,10 +4,12 @@ const loader = document.getElementById('loader');
 const loaderScroll = document.querySelector(".s-loader");
 const srcInput = document.getElementById("src-but");
 const genreSelect = document.getElementById("genre");
-
+const maxEpsSelect = document.getElementById("max-eps-input");
+var nCards = 0;
 
 sessionStorage.setItem('actualPage', 1);
 sessionStorage.setItem('doneRequests', 0);
+sessionStorage.setItem('maxEpisodes', 10000);
 
 function setActualQuery(query) {
     sessionStorage.setItem('actualQuery', query);
@@ -21,8 +23,12 @@ function setActualVariables(variables) {
     sessionStorage.setItem('actualVariables', JSON.stringify(variables));
 }
 
-function setDoneRequests(done){
+function setDoneRequests(done) {
     sessionStorage.setItem('doneRequests', done);
+}
+
+function setMaxEpisodes(episodes) {
+    sessionStorage.setItem('maxEpisodes', episodes);
 }
 
 
@@ -63,88 +69,27 @@ function makeGraphQLRequest(query, variables) {
     }
 }
 
-//Função para listar os animes
-function catalogList() {
-    console.log("GENERO " + genreSelect.value);
-    //Definindo a query
-    let query = `
-    query ($page: Int, $perPage: Int, $genre: String) {
-        Page (page: $page, perPage: $perPage) {
-          pageInfo {
-            total
-            currentPage
-            lastPage
-            hasNextPage
-            perPage
-          }
-          media (type: ANIME, sort: POPULARITY_DESC, genre: $genre) {
-            id
-            title {
-              romaji
-            }
-            averageScore
-            description
-            coverImage{
-                large
-            }
-          }
-        }
-      }
-`;
-    // Definindo o valor das variaveis que serão usadas da nossa query 
-    let variables = {
-        page: 1,
-        perPage: 50,
-        genre: genreSelect.value !== "none" ? genreSelect.value : null
-    };
-
-
-    setActualQuery(query);
-    setActualVariables(variables);
-    setActualPage(1);
-    setDoneRequests(0);
-
-    makeGraphQLRequest(query, variables)
-        .then(function (response) {
-            let tela = ``;
-            loader.style.display = 'inline-block';
-            console.log(response.data.Page.pageInfo.total);
-            response.data.Page.media.map((dado) => {
-                tela = tela + `
-            <div id="${dado.id}" class="card">
-            <div class="card-prev-info">
-            <p><b>${dado.title.romaji}</b></p>
-            <p>Avaliação: ${dado.averageScore}/100</p>
-            </div>
-            <img src=${dado.coverImage.large}></img>
-            </div>
-            `;
-            });
-            bodyCatalog.innerHTML = tela;
-            console.log(response);
-            loader.style.display = 'none';
-            document.body.style.background = "linear-gradient(to right top, #0a2674, #145046)";
-            // console.log(response.data.Page.pageInfo.currentPage);
-        })
-        .catch(function (error) {
-            console.error(error);
-        });
-
+//Função para atualizar o filtro de número máximo de episódios
+function updateMaxEpisodes() {
+    const maxEpsValue = maxEpsSelect.value.trim();
+    //Checando se o nuúmero digitado pelo usuário é valido
+    if (!isNaN(parseInt(maxEpsValue))) {
+        setMaxEpisodes(Math.abs(parseInt(maxEpsValue)));
+    } else {
+        setMaxEpisodes(10000);
+    }
 }
 
 //Função para filtrar animes de acordo com a pesquisa
 function searchAnime(event) {
-    console.log("GENERO " + genreSelect.value);
     if (!event || event.key === "Enter") {
-        let anime = srcInput.value;
         bodyCatalog.innerHTML = '';
-        document.body.style.background = "#024c4e";
         loader.style.display = 'inline-block';
         //Se nada foi digitado, listar os animes novamente
-        if (anime.length === 0) {
-            catalogList();
-        } else {
-            let query = `
+        updateMaxEpisodes();
+        nCards = 0;
+        console.log("GENERO " + genreSelect.value);
+        let query = `
             query ($page: Int, $perPage: Int, $search: String, $genre: String) {
                 Page (page: $page, perPage: $perPage) {
                   pageInfo {
@@ -159,6 +104,7 @@ function searchAnime(event) {
                     title {
                       romaji
                     }
+                    episodes
                     averageScore
                     description
                     coverImage {
@@ -169,53 +115,84 @@ function searchAnime(event) {
               }
         `;
 
-            let variables = {
-                page: 1,
-                perPage: 50,
-                search: anime,
-                genre: genreSelect.value !== "none" ? genreSelect.value : null
-            };
-           
+        let variables = {
+            page: 1,
+            perPage: 50,
+            search: srcInput.value.trim() !== '' ? srcInput.value : null,
+            genre: genreSelect.value !== "none" ? genreSelect.value : null
+        };
 
-            setActualQuery(query);
-            setActualVariables(variables);
-            setActualPage(1);
-            setDoneRequests(0);
-
-            makeGraphQLRequest(query, variables)
-                .then(function (response) {
-                    let tela = ``
-                    if (response.data.Page.media.length === 0) {
-                        document.body.style.background = "#024c4e";
-                        bodyCatalog.innerHTML = `<h1>Desculpe, não foi encontrado nenhum anime :( </h1>`
-                        loader.style.display = 'none';
-                        setActualPage(1);
-                        setActualQuery('');
-                        setActualVariables('');
-                    } else {
-                        response.data.Page.media.map((dado) => {
+        setActualQuery(query);
+        setActualVariables(variables);
+        setActualPage(1);
+        setDoneRequests(0);
+        makeGraphQLRequest(query, variables)
+            .then(function (response) {
+                let tela = ``
+                if (response.data.Page.media.length === 0) {
+                    bodyCatalog.innerHTML = `<h1>Desculpe, não foi encontrado nenhum anime :( </h1>`
+                    loader.style.display = 'none';
+                    setActualPage(1);
+                    setActualQuery('');
+                    setActualVariables('');
+                    setDoneRequests(1);
+                } else {
+                    max = parseInt(sessionStorage.getItem('maxEpisodes'));
+                    response.data.Page.media.map((dado) => {
+                        if (dado.episodes <= max && (max === 10000 || dado.episodes !== null)) {
+                            nCards++;
                             tela = tela + `
-                            <div id="${dado.id}" class="card">
-                                <div class="card-prev-info">
-                                <p><b>${dado.title.romaji}</b></p>
-                                <p>Avaliação: ${dado.averageScore}/100</p>
-                                </div>
-                                <img src=${dado.coverImage.large}></img>
-                                </div>
-                                `
-                        })
-                        bodyCatalog.innerHTML = tela;
-                        console.log(response);
-                        loader.style.display = 'none';
-                        document.body.style.background = "linear-gradient(to right top, #0a2674, #145046)";
+                                <div id="${dado.id}" class="card">
+                                    <div class="card-prev-info">
+                                    <p><b>${dado.title.romaji}</b></p>
+                                    <p>Avaliação: ${dado.averageScore}/100</p>
+                                    </div>
+                                    <img src=${dado.coverImage.large}></img>
+                                    </div>
+                                    `
+                        }
+                    })
+                    bodyCatalog.innerHTML = tela;
+                    console.log(response);
+                    loader.style.display = 'none';
+                }
+            })
 
-                    }
-                })
-
-        }
+        //Após cada busca, checando se o número de cards na tela é menor que trinta ou se não tem barra lateral
+        let requestsDone = parseInt(sessionStorage.getItem('doneRequests'));
+        setTimeout(function() {
+            if (nCards < 30 && requestsDone == 0) {
+                console.log("Não tem barra lateral");
+                verifyNcardsAndScrollbar();
+            }
+        }, 1000); // 2000 milissegundos = 2 segundos
     }
 
 }
+
+ //Função para carregar mais cards continuamente caso a scrollbar não apareça ou os cards permaneçam menor que 30
+function verifyNcardsAndScrollbar() {
+    const elemento = document.documentElement;
+    let requestsDone = parseInt(sessionStorage.getItem('doneRequests'));
+    // Defina um intervalo para verificar a condição
+    const intervalo = setInterval(function() {
+        console.log(nCards);
+        //Checando se tem scrollBar, se o número de cards é menor que 30 e se não tem mais páginas da request
+        if ((!(elemento.scrollHeight > elemento.clientHeight) || nCards < 30) && requestsDone === 0) {
+            console.log("Não tem barra lateral");
+            loaderScroll.style.display = "inline-block";
+            canLoadCards(false); // Chame a função depois da pausa
+        }else{
+            if(requestsDone === 1){
+                console.log("ACABARAM OS ANIMES!");
+            }
+            //para de carregar mais cards
+            clearInterval(intervalo); 
+            loaderScroll.style.display = "none";
+        }
+    }, 1000); // Verificar a cada 1 segundo (1000 milissegundos)
+}
+
 
 //Função para incrementar a actualPage e atualizar a page na actualVariables na sessionStorage
 function incrementsPage() {
@@ -235,39 +212,47 @@ function incrementsPage() {
 }
 
 //Função para carregar novos cards na tela
-function loadAdditionalCards() {
-
+function loadAdditionalCards(valorBooleano) {
     let queryQ = sessionStorage.getItem('actualQuery');
     let variablesV = sessionStorage.getItem('actualVariables');
-    if (!(queryQ === '') && !(variablesV === '')) {
+    if(valorBooleano){
         loaderScroll.style.display = "inline-block";
+    }
+    if (!(queryQ === '') && !(variablesV === '')) {
         incrementsPage();
         let query = sessionStorage.getItem('actualQuery');
         let variables = sessionStorage.getItem('actualVariables');
-        makeGraphQLRequest(query, variables).then(function (response) {
+        makeGraphQLRequest(query, variables).then(async function (response) {
             //checando se ainda tem alguma página de requisição
             console.log("TAMANHO DA PÁGINA DA REQUEST " + response.data.Page.media.length);
-            if(response.data.Page.media.length > 0){
+            if (response.data.Page.media.length > 0) {
                 let newCards = '';
+                max = parseInt(sessionStorage.getItem('maxEpisodes'));
                 response.data.Page.media.map((dado) => {
-                    newCards = newCards + `
-                <div id="${dado.id}" class="card">
-                <div class="card-prev-info">
-                <p><b>${dado.title.romaji}</b></p>
-                <p>Avaliação: ${dado.averageScore}/100</p>
-                </div>
-                <img src=${dado.coverImage.large}></img>
-                </div>
-                `;
+                    if (dado.episodes <= max && (max === 10000 || dado.episodes !== null)) {
+                        nCards++;
+                        newCards = newCards + `
+                        <div id="${dado.id}" class="card">
+                        <div class="card-prev-info">
+                        <p><b>${dado.title.romaji}</b></p>
+                        <p>Avaliação: ${dado.averageScore}/100</p>
+                        </div>
+                        <img src=${dado.coverImage.large}></img>
+                        </div>
+                    `;
+                    }
                 });
+                console.log("Cards Add " + nCards);
                 bodyCatalog.innerHTML += newCards;
                 console.log(response);
                 // console.log(response.data.Page.pageInfo.currentPage);
-            }else{
+            } else {
                 console.log("Não há mais páginas!!")
                 sessionStorage.setItem('doneRequests', 1);
             }
-            loaderScroll.style.display = "none";
+            if(valorBooleano){
+                loaderScroll.style.display = "none";
+            }
         })
     }
 
@@ -278,29 +263,37 @@ var canLoadAdditionalCards = true;
 
 //Chamado quando o usuário rola a tela inteira
 window.addEventListener("scroll", function () {
-  // Checando se o usuário scrollou a tela toda e pode carregar mais cartões
-  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && canLoadAdditionalCards) {
+    // Checando se o usuário scrollou a tela toda e pode carregar mais cartões
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight && canLoadAdditionalCards) {
+        canLoadCards(true);
+    }
+})
+
+//valorBooleano -> Definir corretamente quando o loader de carregar mais cards deve aparecer 
+function canLoadCards(valorBooleano) {
     // Define canLoadAdditionalCards como false para evitar chamadas adicionais
     canLoadAdditionalCards = false;
     let doneRequests = sessionStorage.getItem('doneRequests');
     console.log("Done requests: " + doneRequests);
-    //checando se não há mais páginas
-    if(!(parseInt(doneRequests))){
-        loadAdditionalCards();
+    //Cechando se não há mais páginas para serem carregadas dessa requisição
+    console.log("DONE REQUESTS " + doneRequests);
+    if (!(parseInt(doneRequests))) {
+        loadAdditionalCards(valorBooleano);
     }
     console.log("=============INFOS=============\n")
     console.log("QUERY: " + sessionStorage.getItem('actualQuery'));
     console.log("VARIAVEIS: " + sessionStorage.getItem('actualVariables'));
     console.log("PÁGINA ATUAL: " + sessionStorage.getItem('actualPage'));
+    console.log("MAXIMO DE EPISODIOS " + parseInt(sessionStorage.getItem('maxEpisodes')))
     console.log('Você chegou ao final da página!');
     console.log("\n==============================");
 
     // Agende a redefinição de canLoadAdditionalCards para true após 1 segundo
     setTimeout(function () {
-      canLoadAdditionalCards = true;
+        canLoadAdditionalCards = true;
     }, 1000); // 1 segundo em milissegundos
-  }
-});
+
+}
 
 
 

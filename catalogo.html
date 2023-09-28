@@ -8,7 +8,7 @@
     <title>Catálogo</title>
 </head>
 
-<body onload="catalogList()">
+<body onload="searchAnime()">
     <nav class="menu-div">
         <ul>
             <li><a href="index.html">Início</a></li>
@@ -19,55 +19,56 @@
             <li id="login-but"><a href="#">Login</a></li>
         </ul>
     </nav>
-
-    <main class="listagem">
-
-        <section class="search-div">
-            <!-- Select para filtragem por genero -->
-            <div class="genre-selecion">
-                <label for="genero">Genero</label>
-                <div class="center-select">
-                    <select id="genre">
-                        <option value="none">Selecione...</option>
-                        <option value="action">Ação</option>
-                        <option value="adventure">Aventura</option>
-                        <option value="comedy">Comédia</option>
-                        <option value="drama">Drama</option>
-                        <option value="fantasy">Fantasia</option>
-                        <option value="horror">Terror</option>
-                        <option value="music">Música</option>
-                        <option value="sports">Esportes</option>
-                    </select>
+    <main class="main-content">
+        <div class="listagem">
+            <section class="search-div">
+                <!-- Select para filtragem por genero -->
+                <div class="genre-selecion">
+                    <label for="genero">Genero</label>
+                    <div class="center-select">
+                        <select id="genre">
+                            <option value="none">Selecione...</option>
+                            <option value="action">Ação</option>
+                            <option value="adventure">Aventura</option>
+                            <option value="comedy">Comédia</option>
+                            <option value="drama">Drama</option>
+                            <option value="fantasy">Fantasia</option>
+                            <option value="horror">Terror</option>
+                            <option value="music">Música</option>
+                            <option value="sports">Esportes</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Input de pesquisa por anime -->
-            <div class="src-input">
-                <input id="src-but" type="text" name="" placeholder="Qual anime procura?"
-                    onkeydown="searchAnime(event)" />
-                    <button id="buttonSearch" onclick="searchAnime()">Pesquisar</button>
-            </div> 
-            
-            <!-- Input número máximo de episódios -->
-            <div class="max-eps-selecion">
-
-                <div class="max-eps-selecion">
-                    <label for="max-eps-input">Máximo de episódios</label>
-                    <input id="max-eps-input" type="number" name="" placeholder="Número máximo de episódios"
+                <!-- Input de pesquisa por anime -->
+                <div class="src-input">
+                    <input id="src-but" type="text" name="" placeholder="Qual anime procura?"
                         onkeydown="searchAnime(event)" />
+                    <button id="buttonSearch" onclick="searchAnime()">Pesquisar</button>
                 </div>
+
+                <!-- Input número máximo de episódios -->
+                <div class="max-eps-selecion">
+
+                    <div class="max-eps-selecion">
+                        <label for="max-eps-input">Máximo de episódios</label>
+                        <input id="max-eps-input" type="number" name="" placeholder="Número máximo de episódios"
+                            onkeydown="searchAnime(event)" />
+                    </div>
+                </div>
+            </section>
+            <div class="c-loader" id="loader"> </div>
+
+            <div class="catalogo">
+                <!-- div para a listagem dos cards -->
             </div>
-        </section>
-        <div class="c-loader" id="loader"> </div>
+            <div class="center-s-loader">
+                <div class="s-loader"></div>
+            </div>
 
-        <div class="catalogo">
-            <!-- div para a listagem dos cards -->
         </div>
-        <div class="center-s-loader">
-            <div class="s-loader"></div>
-        </div>
-
     </main>
+
 
 </body>
 <script src="requests.js"></script>
