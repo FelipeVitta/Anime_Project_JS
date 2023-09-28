@@ -88,7 +88,6 @@ function searchAnime(event) {
         //Se nada foi digitado, listar os animes novamente
         updateMaxEpisodes();
         nCards = 0;
-        console.log("GENERO " + genreSelect.value);
         let query = `
             query ($page: Int, $perPage: Int, $search: String, $genre: String) {
                 Page (page: $page, perPage: $perPage) {
@@ -158,11 +157,10 @@ function searchAnime(event) {
                 }
             })
 
-        //Após cada busca, checando se o número de cards na tela é menor que trinta ou se não tem barra lateral
+        //Checando se o número de cards na tela é menor que 30 e se há mais animes para buscar
         let requestsDone = parseInt(sessionStorage.getItem('doneRequests'));
         setTimeout(function() {
             if (nCards < 30 && requestsDone == 0) {
-                console.log("Não tem barra lateral");
                 verifyNcardsAndScrollbar();
             }
         }, 1000); // 2000 milissegundos = 2 segundos
@@ -173,19 +171,15 @@ function searchAnime(event) {
  //Função para carregar mais cards continuamente caso a scrollbar não apareça ou os cards permaneçam menor que 30
 function verifyNcardsAndScrollbar() {
     const elemento = document.documentElement;
-    let requestsDone = parseInt(sessionStorage.getItem('doneRequests'));
     // Defina um intervalo para verificar a condição
     const intervalo = setInterval(function() {
         console.log(nCards);
         //Checando se tem scrollBar, se o número de cards é menor que 30 e se não tem mais páginas da request
-        if ((!(elemento.scrollHeight > elemento.clientHeight) || nCards < 30) && requestsDone === 0) {
-            console.log("Não tem barra lateral");
+        if ((!(elemento.scrollHeight > elemento.clientHeight) || nCards < 30) && parseInt(sessionStorage.getItem('doneRequests')) === 0) {
+            console.log("Carregando mais animes...");
             loaderScroll.style.display = "inline-block";
             canLoadCards(false); // Chame a função depois da pausa
         }else{
-            if(requestsDone === 1){
-                console.log("ACABARAM OS ANIMES!");
-            }
             //para de carregar mais cards
             clearInterval(intervalo); 
             loaderScroll.style.display = "none";
@@ -247,7 +241,7 @@ function loadAdditionalCards(valorBooleano) {
                 console.log(response);
                 // console.log(response.data.Page.pageInfo.currentPage);
             } else {
-                console.log("Não há mais páginas!!")
+                console.log("Done Requests Setado para 1")
                 sessionStorage.setItem('doneRequests', 1);
             }
             if(valorBooleano){
@@ -274,9 +268,6 @@ function canLoadCards(valorBooleano) {
     // Define canLoadAdditionalCards como false para evitar chamadas adicionais
     canLoadAdditionalCards = false;
     let doneRequests = sessionStorage.getItem('doneRequests');
-    console.log("Done requests: " + doneRequests);
-    //Cechando se não há mais páginas para serem carregadas dessa requisição
-    console.log("DONE REQUESTS " + doneRequests);
     if (!(parseInt(doneRequests))) {
         loadAdditionalCards(valorBooleano);
     }
@@ -285,6 +276,12 @@ function canLoadCards(valorBooleano) {
     console.log("VARIAVEIS: " + sessionStorage.getItem('actualVariables'));
     console.log("PÁGINA ATUAL: " + sessionStorage.getItem('actualPage'));
     console.log("MAXIMO DE EPISODIOS " + parseInt(sessionStorage.getItem('maxEpisodes')))
+    if((parseInt(doneRequests)) === 1){
+        console.log("DONE REQUESTS " + doneRequests);
+        console.log("ACABARAM OS ANIMES!!");
+    }else{
+        console.log("DONE REQUESTS " + doneRequests);
+    }
     console.log('Você chegou ao final da página!');
     console.log("\n==============================");
 
