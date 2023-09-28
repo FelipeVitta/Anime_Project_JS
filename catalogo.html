@@ -23,6 +23,17 @@
         <div class="listagem">
             <section class="search-div">
                 <!-- Select para filtragem por genero -->
+
+                <!-- Input de pesquisa por anime -->
+                <div class="src-input">
+                    <input id="src-but" type="text" name="" placeholder="Qual anime procura?"
+                        onkeydown="searchAnime(event)" />
+                </div>
+
+                <div class="div-btn-src">
+                    <button id="buttonSearch" onclick="searchAnime()">Pesquisar</button>
+                </div>
+
                 <div class="genre-selecion">
                     <label for="genero">Genero</label>
                     <div class="center-select">
@@ -36,25 +47,18 @@
                             <option value="horror">Terror</option>
                             <option value="music">Música</option>
                             <option value="sports">Esportes</option>
+                            <option value="romance">Romance</option>
                         </select>
                     </div>
                 </div>
 
-                <!-- Input de pesquisa por anime -->
-                <div class="src-input">
-                    <input id="src-but" type="text" name="" placeholder="Qual anime procura?"
-                        onkeydown="searchAnime(event)" />
-                    <button id="buttonSearch" onclick="searchAnime()">Pesquisar</button>
-                </div>
-
                 <!-- Input número máximo de episódios -->
                 <div class="max-eps-selecion">
-
                     <div class="max-eps-selecion">
                         <label for="max-eps-input">Máximo de episódios</label>
                         <input id="max-eps-input" type="number" name="" placeholder="Número máximo de episódios"
                             onkeydown="searchAnime(event)" />
-                    </div>
+                    </div>                 
                 </div>
             </section>
             <div class="c-loader" id="loader"> </div>

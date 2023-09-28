@@ -3,21 +3,26 @@ body {
   overflow-x: hidden;
   /* escondendo o scroll horizontal */
   background-image: linear-gradient(to right top, #0a2674, #145046);
-  background-size: cover; /* Isso faz o gradiente cobrir todo o fundo */
+  background-size: cover;   /* Isso faz o gradiente cobrir todo o fundo */
   background-repeat: no-repeat;
   background-attachment: fixed; /* Isso faz com que o gradiente permaneça fixo enquanto você rola a página */
 }
 
+select{
+   overflow-y:auto;
+}
 
 ::-webkit-scrollbar {
-  width: 15px; /* Aumente a largura para facilitar a seleção */
+  width: 15px;
+  /* Aumente a largura para facilitar a seleção */
   background: #005043;
 }
 
-::-webkit-scrollbar-thumb{
+::-webkit-scrollbar-thumb {
   background: #013f37;
   border: solid 2px;
 }
+
 /* Menu */
 
 .menu-div ul li a {
@@ -54,6 +59,7 @@ body {
   margin-left: 120px;
   margin-right: 30px;
 }
+
 /* LOADERS */
 
 .c-loader {
@@ -80,7 +86,7 @@ body {
   }
 }
 
-.s-loader{
+.s-loader {
   align-items: center;
   display: none;
   top: 93.5%;
@@ -102,7 +108,7 @@ body {
   }
 }
 
-.center-s-loader{
+.center-s-loader {
   display: flex;
   justify-content: center;
 }
@@ -130,10 +136,11 @@ body {
 /* input de pesquisa */
 
 .src-input {
-  display: flex; 
+  display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center; 
+  text-align: center;
+  margin-right: 15px;
+  margin-top: 15px;
 }
 
 #src-but {
@@ -146,12 +153,16 @@ body {
   background-color: #161616;
   color: #ffffff;
   flex: 1;
-  margin-bottom: 15px;
 }
 
-#buttonSearch{
-  width: 160px; 
-  height: 40px; 
+.div-btn-src {
+  flex-basis: 15%;
+  margin-top: 15px;
+}
+
+#buttonSearch {
+  width: 160px;
+  height: 40px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 16px;
@@ -159,7 +170,7 @@ body {
   color: #ffffff;
 }
 
-#buttonSearch:hover{
+#buttonSearch:hover {
   color: #024c4e;
   border: 1px solid #024c4e;
 }
@@ -180,17 +191,17 @@ body {
 }
 
 
-option{
+option {
   color: #ffffff;
   background-color: #000000;
 }
 
-.center-select{
+.center-select {
   display: flex;
   justify-content: center;
 }
 
-@media screen and (max-width: 1200px){
+@media screen and (max-width: 1200px) {
 
   .genre-selecion {
     flex-basis: 25%;
@@ -199,7 +210,9 @@ option{
 
 }
 
+
 /* filtragem por máximo de episódios */
+
 
 #max-eps-input {
   width: 100px;
@@ -226,7 +239,7 @@ option{
   justify-content: center;
 }
 
-@media screen and (max-width: 1200px){
+@media screen and (max-width: 1200px) {
 
   .max-eps-selecion {
     flex-basis: 25%;
@@ -280,4 +293,3 @@ option{
 .card img {
   margin-top: 15px;
 }
-
