@@ -83,6 +83,7 @@ function searchAnime(event) {
                     id
                     title {
                       romaji
+                      english
                     }
                     episodes
                     averageScore
@@ -123,7 +124,7 @@ function searchAnime(event) {
                             tela = tela + `
                                 <div id="${dado.id}" class="card">
                                     <div class="card-prev-info">
-                                    <p><b>${dado.title.romaji}</b></p>
+                                    <p><b>${dado.title.english != null ? dado.title.english : dado.title.romaji}</b></p>
                                     <p>Avaliação: ${dado.averageScore}/100</p>
                                     </div>
                                     <img src=${dado.coverImage.large}></img>
@@ -183,7 +184,7 @@ function loadAdditionalCards() {
                         newCards = newCards + `
                         <div id="${dado.id}" class="card">
                         <div class="card-prev-info">
-                        <p><b>${dado.title.romaji}</b></p>
+                        <p><b>${dado.title.english != null ? dado.title.english : dado.title.romaji}</b></p>
                         <p>Avaliação: ${dado.averageScore}/100</p>
                         </div>
                         <img src=${dado.coverImage.large}></img>
@@ -237,7 +238,7 @@ function canLoadCards() {
     // Agende a redefinição de canLoadAdditionalCards para true após 1 segundo
     setTimeout(function () {
         canLoadAdditionalCards = true;
-    }, 1000); // 1 segundo em milissegundos
+    }, 2000); // 2 segundos em milissegundos
 
 }
 
