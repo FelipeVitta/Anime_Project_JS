@@ -29,13 +29,6 @@ function showCardDetails(cardId) {
     let query = `
     query ($page: Int, $perPage: Int) {
         Page (page: $page, perPage: $perPage) {
-          pageInfo {
-            total
-            currentPage
-            lastPage
-            hasNextPage
-            perPage
-          }
           media (type: ANIME, sort: POPULARITY_DESC, id: ${cardId}) {
             id
             title {
@@ -47,9 +40,6 @@ function showCardDetails(cardId) {
             bannerImage
             averageScore
             description
-            coverImage {
-              large
-            }
           }
         }
       }
@@ -58,7 +48,7 @@ function showCardDetails(cardId) {
 
     let variables = {
         page: 1,
-        perPage: 50,
+        perPage: 1,
     };
 
     makeGraphQLRequest(query, variables)

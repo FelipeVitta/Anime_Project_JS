@@ -75,22 +75,13 @@ function searchAnime(event) {
         let query = `
             query ($page: Int, $perPage: Int, $search: String, $genre: String, $episodes_lesser: Int) {
                 Page (page: $page, perPage: $perPage) {
-                  pageInfo {
-                    total
-                    currentPage
-                    lastPage
-                    hasNextPage
-                    perPage
-                  }
                   media (type: ANIME, sort: POPULARITY_DESC, search: $search, genre: $genre, episodes_lesser: $episodes_lesser) {
                     id
                     title {
                       romaji
                       english
                     }
-                    episodes
                     averageScore
-                    description
                     coverImage {
                       large
                     }
@@ -242,10 +233,10 @@ function canLoadCards() {
     console.log('Você chegou ao final da página!');
     console.log("\n==============================");
 
-    // Agende a redefinição de canLoadAdditionalCards para true após 1 segundo
+    // Agende a redefinição de canLoadAdditionalCards para true após segundos
     setTimeout(function () {
         canLoadAdditionalCards = true;
-    }, 2000); // 2 segundos em milissegundos
+    }, 2500); // 2,5 segundos em milissegundos
 
 }
 
