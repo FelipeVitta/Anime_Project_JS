@@ -1,0 +1,53 @@
+body{
+    margin: 0;
+    overflow-x: hidden;
+    background-image: linear-gradient(to right top, #0a2674, #145046);
+    background-size: cover;   
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+/* Seta */
+
+#card-div{
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap; 
+}
+
+
+#card-anime-image{
+    max-width: 100%; /* A imagem não deve exceder a largura do contêiner pai */
+    height: auto; /* Mantém a proporção da imagem */
+}
+
+
+#anime-title{
+    font-size: 50px !important; 
+}
+
+#card-anime-image{
+    max-height: 500px;
+}
+
+.anime-informations{
+    margin-top: 10px;
+    border-top: solid 2px rgb(12, 12, 12);
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr; /* Cria três colunas com espaçamento uniforme */
+    gap: 80px;
+    font-size: 35px;
+    align-items: center;
+}
+
+.anime-description-div{
+    font-size: 25px;
+    padding-right: 20px;
+    padding-left: 5px;
+    background-color: rgb(37, 37, 37);
+    color: aliceblue;
+}
+
+

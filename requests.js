@@ -5,6 +5,7 @@ const loaderScroll = document.querySelector(".s-loader");
 const srcInput = document.getElementById("src-but");
 const genreSelect = document.getElementById("genre");
 const maxEpsSelect = document.getElementById("max-eps-input");
+const btnSearch = document.getElementById("buttonSearch");
 
 sessionStorage.setItem('actualPage', 1);
 sessionStorage.setItem('doneRequests', 0);
@@ -46,6 +47,7 @@ function makeGraphQLRequest(query, variables) {
         .catch(handleError);
 
     function handleResponse(response) {
+        //response.json -> analisar o corpo da resposta, que geralmente contem um JSON
         return response.json().then(function (json) {
             // response.ok = se a resposta está no intervalo de 200 - 299
             if (response.ok) {
@@ -68,6 +70,7 @@ function searchAnime(event) {
     if (!event || event.key === "Enter") {
         bodyCatalog.innerHTML = '';
         loader.style.display = 'inline-block';
+        btnSearch.disabled = true;
         //Se nada foi digitado, listar os animes novamente
         let query = `
             query ($page: Int, $perPage: Int, $search: String, $genre: String, $episodes_lesser: Int) {
@@ -122,10 +125,10 @@ function searchAnime(event) {
                 } else {
                     response.data.Page.media.map((dado) => {
                             tela = tela + `
-                                <div id="${dado.id}" class="card">
+                                <div id="${dado.id}" class="card" onclick="redirectToCardPage(${dado.id})">
                                     <div class="card-prev-info">
                                     <p><b>${dado.title.english != null ? dado.title.english : dado.title.romaji}</b></p>
-                                    <p>Avaliação: ${dado.averageScore}/100</p>
+                                    <p>Avaliação: ${dado.averageScore != null ? dado.averageScore : "?"}/100</p>
                                     </div>
                                     <img src=${dado.coverImage.large}></img>
                                     </div>
@@ -138,6 +141,10 @@ function searchAnime(event) {
             })
         
     }
+    
+    setTimeout(() => {
+        btnSearch.disabled = false;
+    }, 2000);
 
     console.log("=============INFOS=============\n")
     console.log("QUERY: " + sessionStorage.getItem('actualQuery'));
@@ -182,10 +189,10 @@ function loadAdditionalCards() {
                 let newCards = '';
                 response.data.Page.media.map((dado) => {
                         newCards = newCards + `
-                        <div id="${dado.id}" class="card">
+                        <div id="${dado.id}" class="card" onclick="redirectToCardPage(${dado.id})">
                         <div class="card-prev-info">
                         <p><b>${dado.title.english != null ? dado.title.english : dado.title.romaji}</b></p>
-                        <p>Avaliação: ${dado.averageScore}/100</p>
+                        <p>Avaliação: ${dado.averageScore != null ? dado.averageScore : "?"}/100</p>
                         </div>
                         <img src=${dado.coverImage.large}></img>
                         </div>
@@ -240,6 +247,12 @@ function canLoadCards() {
         canLoadAdditionalCards = true;
     }, 2000); // 2 segundos em milissegundos
 
+}
+
+function redirectToCardPage(cardId){
+    let cardPageUrl = `cardpage.html?id=${cardId}`;
+    //redirecionando o navegador para a URL
+    window.location.href = cardPageUrl;
 }
 
 
