@@ -64,10 +64,12 @@ function showCardDetails(cardId) {
                 animeDescription.textContent = dado[0].description;
                 animeGenres.textContent = "Gêneros: " + dado[0].genres;
             } else {
+                //Tratamento quando a requisição não gerou erro mas nada foi encontrado
                 console.log("chegou porra nenhuma nesse cu");
                 mainDiv.innerHTML = "";
                 const childElement = document.createElement('p');
-                childElement.style.fontSize = "30px";
+                childElement.style.fontSize = "40px";
+                childElement.style.textAlign = "center";
                 childElement.textContent = 'Nenhum anime foi encontrado :(';
                 mainDiv.appendChild(childElement);
             }
@@ -109,7 +111,13 @@ function makeGraphQLRequest(query, variables) {
     }
 
     function handleError(error) {
+        //Tratamento quando a requisição deu erro
+        mainDiv.innerHTML = "";
+        const childElement = document.createElement('p');
+        childElement.style.fontSize = "40px";
+        childElement.textContent = 'Erro na solicitação :(';
+        childElement.style.textAlign = "center";
+        mainDiv.appendChild(childElement);
         console.error('Erro na solicitação:', error);
-        throw error; // Lança o erro para que o chamador possa lidar com ele
     }
 }
