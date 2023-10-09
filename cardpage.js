@@ -64,7 +64,7 @@ function showCardDetails(cardId) {
                 animeDescription.textContent = dado[0].description;
                 animeGenres.textContent = "Gêneros: " + dado[0].genres;
             } else {
-                console.log("vai tomar no cu chegou porra nenhuma nesse cu");
+                mainDiv.innerHTML = "Nenhum anime encontrado";
             }
             console.log(response);
         })
