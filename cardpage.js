@@ -52,7 +52,7 @@ function showCardDetails(cardId) {
     };
 
     makeGraphQLRequest(query, variables)
-        .then(function (response) {
+        .then(async function (response) {
             let tela = ``;
             let dado = response.data.Page.media;
             console.log("TAMANHO DO DADO " + dado.length);
@@ -61,7 +61,7 @@ function showCardDetails(cardId) {
                 animeTitle.textContent = dado[0].title.english != null ? dado[0].title.english : dado[0].title.romaji
                 animeEpisodes.textContent = "Número de episodios: " + dado[0].episodes;
                 animeEverageScore.textContent = "Avaliação: " + (dado[0].averageScore != null ? dado[0].averageScore : "?") + "/100";
-                animeDescription.textContent = dado[0].description;
+                animeDescription.innerHTML = dado[0].description;
                 animeGenres.textContent = "Gêneros: " + dado[0].genres;
             } else {
                 //Tratamento quando a requisição não gerou erro mas nada foi encontrado
