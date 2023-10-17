@@ -61,18 +61,12 @@ function showCardDetails(cardId) {
         animeTitle.textContent = dado[0].title.english != null ? dado[0].title.english : dado[0].title.romaji
         animeEpisodes.textContent = "Número de episodios: " + dado[0].episodes;
         animeEverageScore.textContent = "Avaliação: " + (dado[0].averageScore != null ? dado[0].averageScore : "?") + "/100";
-        //Checando se a descrição é muito grande
-        if(dado[0].description.length > 630){
-          translateAndDivideText(dado[0].description)
-        }else{
-          translateText(dado[0].description).then(translatedText => {
-            console.log("A descrição não era muito grande");
-            animeDescription.innerHTML = translatedText;
-          }).catch(error =>{
-            animeDescription.innerHTML = dado[0].description;
-            console.log(error);
-          });
-        }
+        translateText(dado[0].description).then(translatedText =>{
+          animeDescription.innerHTML = translatedText;
+        }).catch(error =>{
+          console.error(error);
+          animeDescription.innerHTML = dado[0].description;
+        });
         animeGenres.textContent = "Gêneros: " + dado[0].genres;
       } else {
         //Tratamento quando a requisição não gerou erro mas nada foi encontrado
@@ -89,61 +83,27 @@ function showCardDetails(cardId) {
 
 }
 
-// Função responsável por concatenar e traduzir as descrições muito grandes
-function translateAndDivideText(text) {
-  let partsText = dividirStringEmPartes(text);
-  const promisses = partsText.map(part => translateText(part));
-
-  //se uma promisse for rejeitada a promisse.all será rejeitada
-  Promise.all(promisses).then(translatedParts => {
-    //junta um array de strings (translatedParts) e cada parte do array é separada por um espaço
-    const concatenatedText = translatedParts.join(' ');
-    console.log("A descrição era grande");
-    animeDescription.innerHTML = concatenatedText;
-  }).catch(error => {
-    animeDescription.innerHTML = text;
-    console.log(error);
-  })
-}
-
-// Função para dividir a string em partes de 760
-function dividirStringEmPartes(string) {
-  let partes = [];
-  for (var i = 0; i < string.length; i += 630) {
-    partes.push(string.slice(i, i + 630));
-  }
-  return partes;
-}
-
 // Função para fazer requisição e traduzir um texto
 function translateText(description) {
   return new Promise((resolve, reject) => {
-    console.log(description.length)
-    const data = JSON.stringify([
-      {
-        Text: description
-      }
-    ]);
-
+    const data = null;
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
 
     xhr.addEventListener('readystatechange', function () {
       if (this.readyState === this.DONE) {
-        if (this.status === 200) {
-          const translatedText = JSON.parse(this.responseText)[0].translations[0].text;
-          //operação assíncrona foi bem-sucedida e retornou um resultado
-          resolve(translatedText);
-        } else {
-          reject(new Error('Erro na tradução'));
+        if(this.status === 200){
+          console.log(JSON.parse(this.responseText).translated_text.pt);
+          resolve(JSON.parse(this.responseText).translated_text.pt)
+        }else{
+          reject(new Error('A solicitação falhou com um status ' + this.status))
         }
       }
     });
 
-    xhr.open('POST', 'https://microsoft-translator-text.p.rapidapi.com/translate?to%5B0%5D=pt&api-version=3.0&profanityAction=NoAction&textType=plain');
-    xhr.setRequestHeader('content-type', 'application/json');
+    xhr.open('GET', `https://nlp-translation.p.rapidapi.com/v1/translate?text=${encodeURIComponent(description)}&to=pt&from=en`);
     xhr.setRequestHeader('X-RapidAPI-Key', '815525dad7mshd81e2791f729929p1a435cjsn062e878947fd');
-    xhr.setRequestHeader('X-RapidAPI-Host', 'microsoft-translator-text.p.rapidapi.com');
+    xhr.setRequestHeader('X-RapidAPI-Host', 'nlp-translation.p.rapidapi.com');
 
     xhr.send(data);
   });
