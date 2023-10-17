@@ -135,7 +135,7 @@ function searchAnime(event) {
     
     setTimeout(() => {
         btnSearch.disabled = false;
-    }, 2000);
+    }, 2500);
 
     console.log("=============INFOS=============\n")
     console.log("QUERY: " + sessionStorage.getItem('actualQuery'));
