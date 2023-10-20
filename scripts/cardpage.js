@@ -60,7 +60,6 @@ function showCardDetails(cardId) {
 
   makeGraphQLRequest(query, variables)
     .then(async function (response) {
-      let tela = ``;
       let dado = response.data.Page.media;
       console.log("TAMANHO DO DADO " + dado.length);
       if (dado.length === 1) {
