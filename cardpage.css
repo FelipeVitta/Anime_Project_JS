@@ -1,53 +1,104 @@
-body{
+body {
     margin: 0;
     overflow-x: hidden;
     background-image: linear-gradient(to right top, #0a2674, #145046);
-    background-size: cover;   
+    background-size: cover;
     background-repeat: no-repeat;
-    background-attachment: fixed; 
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background-attachment: fixed;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 /* Seta */
 
-#card-div{
+.backButton:hover {
+  background-color: #374151;
+}
+
+.backButton:focus {
+  box-shadow: none;
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+#backButton{
+    background-color: #111827;
+    border: 1px solid transparent;
+    border-radius: .75rem;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    flex: 0 0 auto;
+    font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    font-size: 1.125rem;
+    font-weight: 600;
+    line-height: 1.5rem;
+    padding: .75rem 1.2rem;
+    text-align: center;
+    text-decoration: none #6B7280 solid;
+    text-decoration-thickness: auto;
+    transition-duration: .2s;
+    transition-property: background-color,border-color,color,fill,stroke;
+    transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: auto;
+    margin: 10px;
+}
+
+#backButton:hover{
+    background-color: rgb(65, 65, 65);
+    transition: background-color 0.2s;
+}
+
+#card-div {
     padding: 15px;
     display: flex;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 
 
-#card-anime-image{
-    max-width: 100%; /* A imagem não deve exceder a largura do contêiner pai */
-    height: auto; /* Mantém a proporção da imagem */
+#anime-title {
+    font-size: 60px !important;
+    display: block;
+    width: 100vw;
+    text-align: center;
 }
 
-
-#anime-title{
-    font-size: 50px !important; 
+#card-anime-image {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative; /* permitir que você use as propriedades top, right, bottom e left para mover o elemento de sua posição original */
+    top: 50%; /* Posiciona o topo do elemento no ponto médio (50%) do contêiner */
+    transform: translateY(-50%); /* Move o elemento para cima 50% da sua própria altura */
 }
 
-#card-anime-image{
-    max-height: 500px;
+#image-center {
+    max-height: 420px;
+    overflow: hidden;
+    width: 100%;  /* 90% da largura do contêiner pai */
+    border: 5px solid black;
 }
 
-.anime-informations{
-    margin-top: 10px;
-    border-top: solid 2px rgb(12, 12, 12);
+.anime-informations {
     width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr; /* Cria três colunas com espaçamento uniforme */
-    gap: 80px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 40px;
     font-size: 35px;
     align-items: center;
+    padding: 10px;
 }
 
-.anime-description-div{
+.anime-description-div {
+    border-top: solid 5px black;
     font-size: 25px;
     padding-right: 20px;
     padding-left: 5px;
     background-color: rgb(37, 37, 37);
     color: aliceblue;
 }
-
-

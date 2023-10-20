@@ -9,7 +9,8 @@ const animeGenres = document.getElementById("anime-genres");
 
 //Evento para voltar para catalogo no botão de voltar 
 btnBack.addEventListener('click', () => {
-  window.location.href = "catalogo.html";
+  //voltando a página anterior no mesmo estado
+  window.history.back();
 })
 
 //quando a página carregar
@@ -59,15 +60,15 @@ function showCardDetails(cardId) {
       if (dado.length === 1) {
         animeBanner.src = dado[0].bannerImage;
         animeTitle.textContent = dado[0].title.english != null ? dado[0].title.english : dado[0].title.romaji
-        animeEpisodes.textContent = "Número de episodios: " + dado[0].episodes;
-        animeEverageScore.textContent = "Avaliação: " + (dado[0].averageScore != null ? dado[0].averageScore : "?") + "/100";
-        translateText(dado[0].description).then(translatedText =>{
+        animeEpisodes.innerHTML = "<b> Número de episodios: </b>" + dado[0].episodes;
+        animeEverageScore.innerHTML = "<b> Avaliação: </b>" + (dado[0].averageScore != null ? dado[0].averageScore : "?") + "/100";
+        translateText(dado[0].description).then(translatedText => {
           animeDescription.innerHTML = translatedText;
-        }).catch(error =>{
+        }).catch(error => {
           console.error(error);
           animeDescription.innerHTML = dado[0].description;
         });
-        animeGenres.textContent = "Gêneros: " + dado[0].genres;
+        animeGenres.innerHTML = "<b> Gêneros: </b>" + dado[0].genres;
       } else {
         //Tratamento quando a requisição não gerou erro mas nada foi encontrado
         console.log("chegou porra nenhuma nesse cu");
@@ -83,20 +84,21 @@ function showCardDetails(cardId) {
 
 }
 
+
 // Função para fazer requisição e traduzir um texto
 function translateText(description) {
   return new Promise((resolve, reject) => {
     const data = null;
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
-
+    //verificando se a requisição foi concluida
     xhr.addEventListener('readystatechange', function () {
       if (this.readyState === this.DONE) {
-        if(this.status === 200){
+        if (this.status === 200) {
           console.log(JSON.parse(this.responseText).translated_text.pt);
-          resolve(JSON.parse(this.responseText).translated_text.pt)
-        }else{
-          reject(new Error('A solicitação falhou com um status ' + this.status))
+          resolve(JSON.parse(this.responseText).translated_text.pt);
+        } else {
+          reject(new Error('A solicitação falhou com um status ' + this.status));
         }
       }
     });
