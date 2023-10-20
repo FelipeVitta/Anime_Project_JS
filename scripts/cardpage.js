@@ -67,12 +67,14 @@ function showCardDetails(cardId) {
         animeTitle.textContent = dado[0].title.english != null ? dado[0].title.english : dado[0].title.romaji
         animeEpisodes.innerHTML = "<b> Número de episodios: </b>" + dado[0].episodes;
         animeEverageScore.innerHTML = "<b> Avaliação: </b>" + (dado[0].averageScore != null ? dado[0].averageScore : "?") + "/100";
+        // Traduzindo a descrição
         translateText(dado[0].description).then(translatedText => {
           animeDescription.innerHTML = translatedText;
         }).catch(error => {
           console.error(error);
           animeDescription.innerHTML = dado[0].description;
         });
+        // Traduzindo os gêneros
         translateText(dado[0].genres).then(genresTraslated => {
           animeGenres.innerHTML = `<b>Gêneros:</b> ${genresTraslated}`;
         }).catch(error => {

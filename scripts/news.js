@@ -1,6 +1,4 @@
 
-import { translateText } from './utils.js';
-
 const imageNews = document.getElementById("thumb");
 const summaryNews = document.getElementById("news-summary");
 const newsCards = document.getElementById("news-cards");
