@@ -1,3 +1,5 @@
+import { translateText } from './utils.js';
+
 const btnBack = document.getElementById('backButton');
 const mainDiv = document.getElementById('main-div');
 const animeBanner = document.getElementById('card-anime-image');
@@ -9,9 +11,13 @@ const animeGenres = document.getElementById("anime-genres");
 
 //Evento para voltar para catalogo no botão de voltar 
 btnBack.addEventListener('click', () => {
-  //voltando a página anterior no mesmo estado
-  window.history.back();
-})
+  
+  if(window.history.length > 1){
+    window.history.back(); //voltando a página anterior no mesmo estado
+  }else{
+    window.location.href = '../views/catalogo.html';
+  }
+});
 
 //quando a página carregar
 window.addEventListener('load', () => {
@@ -68,7 +74,12 @@ function showCardDetails(cardId) {
           console.error(error);
           animeDescription.innerHTML = dado[0].description;
         });
-        animeGenres.innerHTML = "<b> Gêneros: </b>" + dado[0].genres;
+        translateText(dado[0].genres).then(genresTraslated => {
+          animeGenres.innerHTML = `<b>Gêneros:</b> ${genresTraslated}`;
+        }).catch(error => {
+          console.error(error);
+          animeGenres.innerHTML = `<b>Gêneros:</b> ${dado[0].genres}`;
+        });
       } else {
         //Tratamento quando a requisição não gerou erro mas nada foi encontrado
         console.log("chegou porra nenhuma nesse cu");
@@ -82,33 +93,6 @@ function showCardDetails(cardId) {
       console.log(response);
     })
 
-}
-
-
-// Função para fazer requisição e traduzir um texto
-function translateText(description) {
-  return new Promise((resolve, reject) => {
-    const data = null;
-    const xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-    //verificando se a requisição foi concluida
-    xhr.addEventListener('readystatechange', function () {
-      if (this.readyState === this.DONE) {
-        if (this.status === 200) {
-          console.log(JSON.parse(this.responseText).translated_text.pt);
-          resolve(JSON.parse(this.responseText).translated_text.pt);
-        } else {
-          reject(new Error('A solicitação falhou com um status ' + this.status));
-        }
-      }
-    });
-
-    xhr.open('GET', `https://nlp-translation.p.rapidapi.com/v1/translate?text=${encodeURIComponent(description)}&to=pt&from=en`);
-    xhr.setRequestHeader('X-RapidAPI-Key', '815525dad7mshd81e2791f729929p1a435cjsn062e878947fd');
-    xhr.setRequestHeader('X-RapidAPI-Host', 'nlp-translation.p.rapidapi.com');
-
-    xhr.send(data);
-  });
 }
 
 //função para fazer a request

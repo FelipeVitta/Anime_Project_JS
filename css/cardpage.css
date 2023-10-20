@@ -8,7 +8,7 @@ body {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
-/* Seta */
+/* Botão de voltar */
 
 .backButton:hover {
   background-color: #374151;
@@ -50,6 +50,8 @@ body {
     background-color: rgb(65, 65, 65);
     transition: background-color 0.2s;
 }
+
+/* Página do anime */
 
 #card-div {
     padding: 15px;
