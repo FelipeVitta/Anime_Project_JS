@@ -1,3 +1,5 @@
+import { makeGraphQLRequest } from './utils.js';
+import { redirectToCardPage } from './utils.js';
 
 const bodyCatalog = document.querySelector(".catalogo");
 const loader = document.getElementById('loader');
@@ -9,6 +11,31 @@ const btnSearch = document.getElementById("buttonSearch");
 
 sessionStorage.setItem('actualPage', 1);
 sessionStorage.setItem('doneRequests', 0);
+
+window.addEventListener('load', searchAnime);
+
+btnSearch.addEventListener('click', searchAnime);
+
+window.addEventListener('keydown', function (event) {
+    if (event.key == 'Enter') {
+        searchAnime(event);
+    }
+});
+
+// Adicionando eventos de click aos cards
+function addCardEventListeners() {
+    document.querySelectorAll('.card').forEach(card => {
+        // Evite adicionar múltiplos listeners ao mesmo elemento
+        if (!card.classList.contains('event-attached')) {
+            card.addEventListener('click', function () {
+                const cardId = this.getAttribute('id');
+                redirectToCardPage(cardId);
+            });
+            card.classList.add('event-attached'); // Marque o card para saber que o evento já foi anexado
+        }
+    });
+}
+
 
 function setActualQuery(query) {
     sessionStorage.setItem('actualQuery', query);
@@ -26,48 +53,10 @@ function setDoneRequests(done) {
     sessionStorage.setItem('doneRequests', done);
 }
 
-//função para fazer a request
-function makeGraphQLRequest(query, variables) {
-    let url = 'https://graphql.anilist.co',
-        options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            },
-            body: JSON.stringify({
-                query: query,
-                variables: variables
-            })
-        };
-
-    // Make the HTTP API request
-    return fetch(url, options)
-        .then(handleResponse)
-        .catch(handleError);
-
-    function handleResponse(response) {
-        //response.json -> analisar o corpo da resposta, que geralmente contem um JSON
-        return response.json().then(function (json) {
-            // response.ok = se a resposta está no intervalo de 200 - 299
-            if (response.ok) {
-                return json;
-            } else {
-                throw new Error('Erro na solicitação: ' + response.status);
-            }
-        });
-    }
-
-    function handleError(error) {
-        console.error('Erro na solicitação:', error);
-        throw error; // Lança o erro para que o chamador possa lidar com ele
-    }
-}
-
-
 //Função para filtrar animes de acordo com a pesquisa
 function searchAnime(event) {
-    if (!event || event.key === "Enter") {
+    console.log("Event Type: " + event.type + " " + " " + " Event Key: " + event.key);
+    if (event.type == "load" || event.key === "Enter" || event.type == "click") {
         bodyCatalog.innerHTML = '';
         loader.style.display = 'inline-block';
         btnSearch.disabled = true;
@@ -97,14 +86,14 @@ function searchAnime(event) {
             genre: genreSelect.value !== "none" ? genreSelect.value : null,
             episodes_lesser: isNaN(parseInt(maxEpsSelect.value.trim())) ? 10000 : parseInt(maxEpsSelect.value)
         };
-        
+
 
         setActualQuery(query);
         setActualVariables(variables);
         setActualPage(1);
         setDoneRequests(0);
         makeGraphQLRequest(query, variables)
-            .then(function (response) {
+            .then(response => {
                 let tela = ``
                 if (response.data.Page.media.length === 0) {
                     bodyCatalog.innerHTML = `<h1>Desculpe, não foi encontrado nenhum anime :( </h1>`
@@ -115,32 +104,43 @@ function searchAnime(event) {
                     setDoneRequests(1);
                 } else {
                     response.data.Page.media.map((dado) => {
-                            tela = tela + `
-                                <div id="${dado.id}" class="card" onclick="redirectToCardPage(${dado.id})">
+                        tela = tela + `
+                                <div id="${dado.id}" class="card">
                                     <div class="card-prev-info">
                                     <p><b>${dado.title.english != null ? dado.title.english : dado.title.romaji}</b></p>
                                     <p>Avaliação: ${dado.averageScore != null ? dado.averageScore : "?"}/100</p>
                                     </div>
                                     <img src=${dado.coverImage.large}></img>
                                     </div>
-                                    `                        
+                                    `
                     })
                     bodyCatalog.innerHTML = tela;
+                    addCardEventListeners();
                     console.log(response);
                     loader.style.display = 'none';
                 }
+            }).catch(error => {
+                console.error("Erro ao procurar animes: " + error);
             })
-        
+
     }
-    
+
     setTimeout(() => {
         btnSearch.disabled = false;
     }, 2500);
 
     console.log("=============INFOS=============\n")
-    console.log("QUERY: " + sessionStorage.getItem('actualQuery'));
-    console.log("VARIAVEIS: " + sessionStorage.getItem('actualVariables'));
-    console.log("PÁGINA ATUAL: " + sessionStorage.getItem('actualPage'));
+    if (sessionStorage.getItem('doneRequests') == 0) {
+        let vars = JSON.parse(sessionStorage.getItem('actualVariables'));
+        console.log("PÁGINA ATUAL: " + vars.page);
+        console.log("POR PÁGINA: " + vars.perPage);
+        console.log("MÁXIMO DE EPISÓDIOS: " + vars.episodes_lesser);
+        console.log("GÊNERO: " + vars.genre);
+    }else{
+        console.log("ACABARAM OS ANIMES!!");
+    }
+    console.log("===============================\n")
+
 
 }
 
@@ -166,37 +166,39 @@ function incrementsPage() {
 function loadAdditionalCards() {
     let queryQ = sessionStorage.getItem('actualQuery');
     let variablesV = sessionStorage.getItem('actualVariables');
-    if(!(loader.style.display == "inline-block")){
+    if (!(loader.style.display == "inline-block")) {
         loaderScroll.style.display = "inline-block";
     }
     if (!(queryQ === '') && !(variablesV === '')) {
         incrementsPage();
         let query = sessionStorage.getItem('actualQuery');
         let variables = sessionStorage.getItem('actualVariables');
-        makeGraphQLRequest(query, variables).then(async function (response) {
+        makeGraphQLRequest(query, variables).then(response => {
             //checando se ainda tem alguma página de requisição
-            console.log("TAMANHO DA PÁGINA DA REQUEST " + response.data.Page.media.length);
             if (response.data.Page.media.length > 0) {
                 let newCards = '';
                 response.data.Page.media.map((dado) => {
-                        newCards = newCards + `
-                        <div id="${dado.id}" class="card" onclick="redirectToCardPage(${dado.id})">
+                    newCards = newCards + `
+                        <div id="${dado.id}" class="card">
                         <div class="card-prev-info">
                         <p><b>${dado.title.english != null ? dado.title.english : dado.title.romaji}</b></p>
                         <p>Avaliação: ${dado.averageScore != null ? dado.averageScore : "?"}/100</p>
                         </div>
                         <img src=${dado.coverImage.large}></img>
                         </div>
-                    `;      
+                    `;
                 });
                 bodyCatalog.innerHTML += newCards;
+                addCardEventListeners();
                 console.log(response);
                 // console.log(response.data.Page.pageInfo.currentPage);
             } else {
                 console.log("Done Requests Setado para 1")
                 sessionStorage.setItem('doneRequests', 1);
             }
-                loaderScroll.style.display = "none";
+            loaderScroll.style.display = "none";
+        }).catch(error => {
+            console.error("Erro ao carregar cards: " + error);
         })
     }
 
@@ -221,17 +223,16 @@ function canLoadCards() {
         loadAdditionalCards();
     }
     console.log("=============INFOS=============\n")
-    console.log("QUERY: " + sessionStorage.getItem('actualQuery'));
-    console.log("VARIAVEIS: " + sessionStorage.getItem('actualVariables'));
-    console.log("PÁGINA ATUAL: " + sessionStorage.getItem('actualPage'));
-    if((parseInt(doneRequests)) === 1){
-        console.log("DONE REQUESTS " + doneRequests);
-        console.log("ACABARAM OS ANIMES!!");
+    if (sessionStorage.getItem('doneRequests') == 0) {
+        let vars = JSON.parse(sessionStorage.getItem('actualVariables'));
+        console.log("PÁGINA ATUAL: " + vars.page);
+        console.log("POR PÁGINA: " + vars.perPage);
+        console.log("MÁXIMO DE EPISÓDIOS: " + vars.episodes_lesser);
+        console.log("GÊNERO: " + vars.genre);
     }else{
-        console.log("DONE REQUESTS " + doneRequests);
+        console.log("ACABARAM OS ANIMES!!");
     }
-    console.log('Você chegou ao final da página!');
-    console.log("\n==============================");
+    console.log("===============================\n")
 
     // Agende a redefinição de canLoadAdditionalCards para true após segundos
     setTimeout(function () {
@@ -240,11 +241,6 @@ function canLoadCards() {
 
 }
 
-function redirectToCardPage(cardId){
-    let cardPageUrl = `cardpage.html?id=${cardId}`;
-    //redirecionando o navegador para a URL
-    window.location.href = cardPageUrl;
-}
 
 
 

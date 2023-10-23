@@ -1,4 +1,5 @@
 import { translateText } from './utils.js';
+import { makeGraphQLRequest } from './utils.js';
 
 const btnBack = document.getElementById('backButton');
 const mainDiv = document.getElementById('main-div');
@@ -11,10 +12,9 @@ const animeGenres = document.getElementById("anime-genres");
 
 //Evento para voltar para catalogo no botão de voltar 
 btnBack.addEventListener('click', () => {
-  
-  if(window.history.length > 1){
+  if (window.history.length > 1) {
     window.history.back(); //voltando a página anterior no mesmo estado
-  }else{
+  } else {
     window.location.href = '../views/catalogo.html';
   }
 });
@@ -59,7 +59,7 @@ function showCardDetails(cardId) {
   };
 
   makeGraphQLRequest(query, variables)
-    .then(async function (response) {
+    .then(response => {
       let dado = response.data.Page.media;
       console.log("TAMANHO DO DADO " + dado.length);
       if (dado.length === 1) {
@@ -92,50 +92,14 @@ function showCardDetails(cardId) {
         mainDiv.appendChild(childElement);
       }
       console.log(response);
+    }).catch(error => {
+      mainDiv.innerHTML = "";
+      const childElement = document.createElement('p');
+      childElement.style.fontSize = "40px";
+      childElement.textContent = 'Erro na solicitação :(';
+      childElement.style.textAlign = "center";
+      mainDiv.appendChild(childElement);
+      console.error('Erro na solicitação:', error);
     })
 
-}
-
-//função para fazer a request
-function makeGraphQLRequest(query, variables) {
-  let url = 'https://graphql.anilist.co',
-    options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
-        query: query,
-        variables: variables
-      })
-    };
-
-  // Make the HTTP API request
-  return fetch(url, options)
-    .then(handleResponse)
-    .catch(handleError);
-
-  function handleResponse(response) {
-    //response.json -> lê o corpo da resposta e a analisa, transformando os dados JSON em um objeto JavaScript que pode ser usado em seu código.
-    return response.json().then(function (json) {
-      // response.ok = se a resposta está no intervalo de 200 - 299
-      if (response.ok) {
-        return json;
-      } else {
-        throw new Error('Erro na solicitação: ' + response.status);
-      }
-    });
-  }
-
-  function handleError(error) {
-    //Tratamento quando a requisição deu erro
-    mainDiv.innerHTML = "";
-    const childElement = document.createElement('p');
-    childElement.style.fontSize = "40px";
-    childElement.textContent = 'Erro na solicitação :(';
-    childElement.style.textAlign = "center";
-    mainDiv.appendChild(childElement);
-    console.error('Erro na solicitação:', error);
-  }
 }

@@ -8,7 +8,7 @@
     <title>Catálogo</title>
 </head>
 
-<body onload="searchAnime()">
+<body>
     <nav class="menu-div">
         <ul>
             <li><a href="index.html">Início</a></li>
@@ -26,12 +26,11 @@
 
                 <!-- Input de pesquisa por anime -->
                 <div class="src-input">
-                    <input id="src-but" type="text" name="" placeholder="Qual anime procura?"
-                        onkeydown="searchAnime(event)" />
+                    <input id="src-but" type="text" name="" placeholder="Qual anime procura?" " />
                 </div>
 
-                <div class="div-btn-src">
-                    <button id="buttonSearch" onclick="searchAnime()">Pesquisar</button>
+                <div class=" div-btn-src">
+                    <button id="buttonSearch">Pesquisar</button>
                 </div>
 
                 <div class="genre-selecion">
@@ -56,24 +55,25 @@
                 <div class="max-eps-selecion">
                     <div class="max-eps-selecion">
                         <label for="max-eps-input">Máximo de episódios</label>
-                        <input id="max-eps-input" type="number" name="" placeholder="Número máximo de episódios"
-                            onkeydown="searchAnime(event)" />
+                        <input id="max-eps-input" type="number" name="" placeholder="Número máximo de episódios" " />
                     </div>                 
                 </div>
             </section>
-            <div class="c-loader" id="loader"> </div>
+            <div class=" c-loader" id="loader">
+                    </div>
 
-            <div class="catalogo">
-                <!-- div para a listagem dos cards -->
-            </div>
-            <div class="center-s-loader">
-                <div class="s-loader"></div>
-            </div>
+                    <div class="catalogo">
+                        <!-- div para a listagem dos cards -->
+                    </div>
+                    <div class="center-s-loader">
+                        <div class="s-loader"></div>
+                    </div>
 
-        </div>
+                </div>
     </main>
 
 
 </body>
-<script src="../scripts/requests.js"></script>
+<script type=module src="../scripts/requests.js"></script>
+
 </html>
