@@ -2,14 +2,12 @@
 //Função para traduzir algum texto
 export function translateText(description) {
   return new Promise((resolve, reject) => {
-    const data = null;
     const xhr = new XMLHttpRequest();
     xhr.withCredentials = true;
     //verificando se a requisição foi concluida
     xhr.addEventListener('readystatechange', function () {
       if (this.readyState === this.DONE) {
         if (this.status === 200) {
-          console.log(JSON.parse(this.responseText).translated_text.pt);
           resolve(JSON.parse(this.responseText).translated_text.pt);
         } else {
           reject(new Error('A solicitação falhou com um status ' + this.status));
@@ -21,7 +19,7 @@ export function translateText(description) {
     xhr.setRequestHeader('X-RapidAPI-Key', '815525dad7mshd81e2791f729929p1a435cjsn062e878947fd');
     xhr.setRequestHeader('X-RapidAPI-Host', 'nlp-translation.p.rapidapi.com');
 
-    xhr.send(data);
+    xhr.send();
   });
 }
 
@@ -57,8 +55,8 @@ export function makeGraphQLRequest(query, variables) {
   });
 }
 
-export function redirectToCardPage(cardId){
-  let cardPageUrl = `cardpage.html?id=${cardId}`;
+export function redirectToCardPage(htmlFile, cardId){
+  let cardPageUrl = `${htmlFile}?id=${cardId}`;
   //redirecionando o navegador para a URL
   window.location.href = cardPageUrl;
 }

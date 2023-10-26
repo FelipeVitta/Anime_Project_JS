@@ -29,7 +29,7 @@ function addCardEventListeners() {
         if (!card.classList.contains('event-attached')) {
             card.addEventListener('click', function () {
                 const cardId = this.getAttribute('id');
-                redirectToCardPage(cardId);
+                redirectToCardPage("cardpage.html",cardId);
             });
             card.classList.add('event-attached'); // Marque o card para saber que o evento já foi anexado
         }
@@ -114,7 +114,7 @@ function searchAnime(event) {
                                     </div>
                                     `
                     })
-                    bodyCatalog.innerHTML = tela;
+                    bodyCatalog.insertAdjacentHTML('beforeend', tela);
                     addCardEventListeners();
                     console.log(response);
                     loader.style.display = 'none';
@@ -188,7 +188,8 @@ function loadAdditionalCards() {
                         </div>
                     `;
                 });
-                bodyCatalog.innerHTML += newCards;
+                //adicionando mais HTML dentro do bodyCatalog após seu último filho
+                bodyCatalog.insertAdjacentHTML('beforeend', newCards);
                 addCardEventListeners();
                 console.log(response);
                 // console.log(response.data.Page.pageInfo.currentPage);

@@ -68,19 +68,18 @@ function showCardDetails(cardId) {
         animeEpisodes.innerHTML = "<b> Número de episodios: </b>" + dado[0].episodes;
         animeEverageScore.innerHTML = "<b> Avaliação: </b>" + (dado[0].averageScore != null ? dado[0].averageScore : "?") + "/100";
         // Traduzindo a descrição
-        translateText(dado[0].description).then(translatedText => {
-          animeDescription.innerHTML = translatedText;
-        }).catch(error => {
+        Promise.all([
+          translateText(dado[0].description),
+          translateText(dado[0].genres)
+      ]).then(([translatedDescription, translatedGenres]) => {
+          animeDescription.innerHTML = translatedDescription;
+          animeGenres.innerHTML = `<b>Gêneros:</b> ${translatedGenres}`;
+      }).catch(error => {
           console.error(error);
           animeDescription.innerHTML = dado[0].description;
-        });
-        // Traduzindo os gêneros
-        translateText(dado[0].genres).then(genresTraslated => {
-          animeGenres.innerHTML = `<b>Gêneros:</b> ${genresTraslated}`;
-        }).catch(error => {
-          console.error(error);
           animeGenres.innerHTML = `<b>Gêneros:</b> ${dado[0].genres}`;
-        });
+      });
+      
       } else {
         //Tratamento quando a requisição não gerou erro mas nada foi encontrado
         console.log("chegou porra nenhuma nesse cu");
