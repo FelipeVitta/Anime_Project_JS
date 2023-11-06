@@ -97,7 +97,7 @@ body {
 }
 
 .anime-description-div {
-    border-top: solid 5px black;
+    border: solid 5px black;
     font-size: 25px;
     padding-right: 20px;
     padding-left: 5px;

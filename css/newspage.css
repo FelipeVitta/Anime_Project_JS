@@ -1,0 +1,10 @@
+body {
+    margin: 0;
+    overflow-x: hidden;
+    /* escondendo o scroll horizontal */
+    background-image: linear-gradient(to right top, #0a2674, #145046);
+    background-size: cover;   /* Isso faz o gradiente cobrir todo o fundo */
+    background-repeat: no-repeat;
+    background-attachment: fixed; /* Isso faz com que o gradiente permaneça fixo enquanto você rola a página */
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  }
