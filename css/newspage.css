@@ -8,3 +8,73 @@ body {
     background-attachment: fixed; /* Isso faz com que o gradiente permaneça fixo enquanto você rola a página */
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   }
+
+  :root{
+    --cor-preto: #161616;
+}
+
+::-webkit-scrollbar {
+    width: 15px; /* Aumente a largura para facilitar a seleção */
+    background: #005043;
+  }
+  
+  ::-webkit-scrollbar-thumb{
+    background: #013f37;
+    border: solid 2px;
+  }
+
+
+  .anime-description-div{
+    background-color: rgb(1, 29, 48);
+    border: solid 3px black;
+    color: rgb(209, 209, 209);
+    font-size: 26px;
+    margin: 5px;
+    padding: 8px;
+  }
+
+  .anime-informations{
+    font-size: 35px;
+  }
+
+  .backButton:hover {
+    background-color: #374151;
+  }
+  
+  .backButton:focus {
+    box-shadow: none;
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+  }
+  
+  #backButton{
+      background-color: #111827;
+      border: 1px solid transparent;
+      border-radius: .75rem;
+      box-sizing: border-box;
+      color: #FFFFFF;
+      cursor: pointer;
+      flex: 0 0 auto;
+      font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+      font-size: 1.125rem;
+      font-weight: 600;
+      line-height: 1.5rem;
+      padding: .75rem 1.2rem;
+      text-align: center;
+      text-decoration: none #6B7280 solid;
+      text-decoration-thickness: auto;
+      transition-duration: .2s;
+      transition-property: background-color,border-color,color,fill,stroke;
+      transition-timing-function: cubic-bezier(.4, 0, 0.2, 1);
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+      width: auto;
+      margin: 10px;
+  }
+  
+  #backButton:hover{
+      background-color: rgb(65, 65, 65);
+      transition: background-color 0.2s;
+  }
+  

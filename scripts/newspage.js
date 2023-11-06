@@ -4,6 +4,15 @@ let newsTitle = document.getElementById("news-title");
 let newsAuthor = document.getElementById("news-author");
 let newsSummary = document.getElementById("news-summary");
 let newsImage = document.getElementById("anime-news-image");
+const btnBack = document.getElementById('backButton');
+
+btnBack.addEventListener('click', () => {
+    if (window.history.length > 1) {
+      window.history.back(); //voltando a página anterior no mesmo estado
+    } else {
+      window.location.href = '../views/noticias.html';
+    }
+  });
 
 
 window.addEventListener('load', () => {
