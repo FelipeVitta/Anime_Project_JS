@@ -4,6 +4,7 @@ body {
     /* escondendo o scroll horizontal */
     background: linear-gradient(to right top, #0a2674, #145046);
     margin-bottom: 20px;
+    font-family: 'Nunito', sans-serif;
 }
 
 :root{
@@ -26,7 +27,7 @@ body {
 .menu-div ul li a {
     text-decoration: none;
     color: rgb(201, 201, 201);
-    font-size: 27px;
+    font-size: 25px;
     padding: 10px;
   }
   
@@ -69,7 +70,7 @@ body {
 }
 
 .sec {
-    padding: 5px;
+    padding: 6px;
     display: flex;
     margin-top: 8px;
     background-color: var(--cor-preto);
@@ -81,22 +82,22 @@ body {
     cursor: pointer;
     width: 85vw;
     border: 1px solid;
-    font-family: 'Times New Roman', Times, serif;
     opacity: 1.0;
     background-size: cover;
 }
 
 .sec b {
-    font-size: 50px;
+  margin-top: 5px;
+    font-size: 60px;
 }
 
 .sec:hover {
-    background-color: #002c2c;
+    background-color: #000000;
     transform: scale(1.03);
-    transition: background-color 0.2s ease-in;
+    transition: background-color 0.1s ease-in;
     box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.7);
     color:rgb(202, 219, 255);
-    transition: color 0.3 step-end;
+    transition: color 0.1 step-end;
 }
 
 #ss1 {

@@ -6,6 +6,7 @@ body {
   background-size: cover;   /* Isso faz o gradiente cobrir todo o fundo */
   background-repeat: no-repeat;
   background-attachment: fixed; /* Isso faz com que o gradiente permaneça fixo enquanto você rola a página */
+  font-family: 'Nunito', sans-serif;
 }
 
 select{
@@ -28,7 +29,7 @@ select{
 .menu-div ul li a {
   text-decoration: none;
   color: rgb(201, 201, 201);
-  font-size: 27px;
+  font-size: 25px;
   padding: 10px;
 }
 
@@ -267,7 +268,6 @@ option {
   background: linear-gradient(to bottom, #16584f, #041b18);
   border: 1px solid rgb(0, 0, 0);
   border-radius: 10px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   padding-bottom: 10px;
   transform: scale(1.0);
   transition: transform 0.2s ease;

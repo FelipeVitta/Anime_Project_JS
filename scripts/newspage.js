@@ -8,11 +8,11 @@ const btnBack = document.getElementById('backButton');
 
 btnBack.addEventListener('click', () => {
     if (window.history.length > 1) {
-      window.history.back(); //voltando a página anterior no mesmo estado
+        window.history.back(); //voltando a página anterior no mesmo estado
     } else {
-      window.location.href = '../views/noticias.html';
+        window.location.href = '../views/noticias.html';
     }
-  });
+});
 
 
 window.addEventListener('load', () => {
@@ -21,7 +21,7 @@ window.addEventListener('load', () => {
     const newsId = urlParams.get('id');
     if (newsId != null) {
         showNewsDetail(newsId);
-    }else{
+    } else {
         window.location.href = "../views/noticias.html";
     }
 })
