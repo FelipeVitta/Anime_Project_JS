@@ -1,3 +1,5 @@
+require('dotenv').config();
+const apiKey = process.env.API_KEY;
 
 //Função para traduzir algum texto
 export function translateText(description) {
@@ -16,7 +18,7 @@ export function translateText(description) {
     });
 
     xhr.open('GET', `https://nlp-translation.p.rapidapi.com/v1/translate?text=${encodeURIComponent(description)}&to=pt&from=en`);
-    xhr.setRequestHeader('X-RapidAPI-Key', '815525dad7mshd81e2791f729929p1a435cjsn062e878947fd');
+    xhr.setRequestHeader('X-RapidAPI-Key', apiKey);
     xhr.setRequestHeader('X-RapidAPI-Host', 'nlp-translation.p.rapidapi.com');
 
     xhr.send();

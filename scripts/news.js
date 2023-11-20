@@ -1,5 +1,7 @@
 import { redirectToCardPage } from './utils.js';
+require('dotenv').config();
 
+const apiKey = process.env.API_KEY;
 const imageNews = document.getElementById("thumb");
 const summaryNews = document.getElementById("news-summary");
 const newsCards = document.getElementById("news-cards");
@@ -25,7 +27,7 @@ async function fetchAnimeNews() {
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': '815525dad7mshd81e2791f729929p1a435cjsn062e878947fd',
+            'X-RapidAPI-Key': apiKey,
             'X-RapidAPI-Host': 'anime-news-net.p.rapidapi.com'
         }
     };

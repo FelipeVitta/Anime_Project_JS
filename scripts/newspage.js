@@ -1,5 +1,7 @@
 import { translateText } from "./utils.js";
+require('dotenv').config();
 
+const apiKey = process.env.API_KEY;
 let newsTitle = document.getElementById("news-title");
 let newsAuthor = document.getElementById("news-author");
 let newsSummary = document.getElementById("news-summary");
@@ -57,7 +59,7 @@ async function fetchAnimeNews(newsId) {
     const options = {
         method: 'GET',
         headers: {
-            'X-RapidAPI-Key': '815525dad7mshd81e2791f729929p1a435cjsn062e878947fd',  // Mude para uma forma segura de armazenar
+            'X-RapidAPI-Key': apiKey,  // Mude para uma forma segura de armazenar
             'X-RapidAPI-Host': 'anime-news-net.p.rapidapi.com'
         }
     };
