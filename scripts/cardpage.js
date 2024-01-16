@@ -61,7 +61,7 @@ function showCardDetails(cardId) {
   makeGraphQLRequest(query, variables)
     .then(response => {
       let dado = response.data.Page.media;
-      console.log("TAMANHO DO DADO " + dado.length);
+      console.log("Dado length: " + dado.length);
       if (dado.length === 1) {
         animeBanner.src = dado[0].bannerImage;
         animeTitle.textContent = dado[0].title.english != null ? dado[0].title.english : dado[0].title.romaji
@@ -82,7 +82,6 @@ function showCardDetails(cardId) {
       
       } else {
         //Tratamento quando a requisição não gerou erro mas nada foi encontrado
-        console.log("chegou porra nenhuma nesse cu");
         mainDiv.innerHTML = "";
         const childElement = document.createElement('p');
         childElement.style.fontSize = "40px";
