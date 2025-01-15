@@ -1,43 +1,34 @@
 import { redirectToCardPage } from './utils.js';
-require('dotenv').config();
-
-const apiKey = process.env.API_KEY;
-const imageNews = document.getElementById("thumb");
-const summaryNews = document.getElementById("news-summary");
+const apiKey = '815525dad7mshd81e2791f729929p1a435cjsn062e878947fd';
 const newsCards = document.getElementById("news-cards");
+const url = 'http://localhost:3000/anime-news';
 
 window.addEventListener('load', showAnimeNews);
 
 function addCardNewsEventListeners() {
     document.querySelectorAll('.anime-card-news').forEach(card => {
-        // Evite adicionar múltiplos listeners ao mesmo elemento
         if (!card.classList.contains('event-attached')) {
             card.addEventListener('click', function () {
-                const cardId = this.getAttribute('id');
-                redirectToCardPage("newspage.html",cardId);
+                const link = this.getAttribute('data-link'); // Obtém o link armazenado no atributo data-link
+                if (link) {
+                    window.open(link, '_blank'); // Abre o link em uma nova aba
+                } else {
+                    console.error("Nenhum link encontrado para este card.");
+                }
             });
-            card.classList.add('event-attached'); // Marque o card para saber que o evento já foi anexado
+            card.classList.add('event-attached');
         }
     });
 }
 
+
 async function fetchAnimeNews() {
-
-    const url = 'https://anime-news-net.p.rapidapi.com/api/news';
-    const options = {
-        method: 'GET',
-        headers: {
-            'X-RapidAPI-Key': apiKey,
-            'X-RapidAPI-Host': 'anime-news-net.p.rapidapi.com'
-        }
-    };
-
     try {
-        const response = await fetch(url, options);
-        if (!response.ok) {
-            throw new Error(`Error ${response.status}: ${response.statusText}`);
-        }
-        return await response.json();
+        const response = await fetch(url);
+        const textResponse = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(textResponse, "application/xml");
+        return xmlDoc;
     } catch (error) {
         console.error(error);
         throw error;
@@ -45,24 +36,29 @@ async function fetchAnimeNews() {
 }
 
 function showAnimeNews() {
-    console.log("entra aq?");
     newsCards.innerHTML = '';
     let tela = '';
-    fetchAnimeNews().then(response => {
-        console.log(response);
-        response.map(e => {
-            tela += `<div class="anime-card-news" id="${e.details_api.id}">
-                    <figure id="center-news-image">
-                        <img src="${e.article.thumbnail}" alt="thumb">
-                    </figure>
-                     <div id="news-information">
-                        <h1 id="news-title">${e.article.title}</h1>
+
+    fetchAnimeNews().then(xmlDoc => {
+        const items = xmlDoc.getElementsByTagName('item');
+        Array.from(items).forEach(item => {
+            const title = item.getElementsByTagName('title')[0]?.textContent;
+            const link = item.getElementsByTagName('link')[0]?.textContent;
+            const description = item.getElementsByTagName('description')[0]?.textContent;
+            const pubDate = item.getElementsByTagName('pubDate')[0]?.textContent;
+
+            tela += `<div class="anime-card-news" id="${link}" data-link="${link}">
+                    <div id="news-information">
+                        <h1 id="news-title">${title}</h1>
+                        <p>${description}</p>
+                        <p><small>${new Date(pubDate).toLocaleDateString()}</small></p>
                     </div>
-                    </div>`
-        })
+                </div>`;
+        });
+
         newsCards.innerHTML = tela;
         addCardNewsEventListeners();
+    }).catch(error => {
+        console.error("Failed to load news:", error);
     });
-
 }
-

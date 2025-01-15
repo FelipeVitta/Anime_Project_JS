@@ -67,18 +67,20 @@ function showCardDetails(cardId) {
         animeTitle.textContent = dado[0].title.english != null ? dado[0].title.english : dado[0].title.romaji
         animeEpisodes.innerHTML = "<b> Número de episodios: </b>" + dado[0].episodes;
         animeEverageScore.innerHTML = "<b> Avaliação: </b>" + (dado[0].averageScore != null ? dado[0].averageScore : "?") + "/100";
+        animeDescription.innerHTML = dado[0].description;
+        animeGenres.innerHTML = `<b>Gêneros:</b> ${dado[0].genres}`;
         // Traduzindo a descrição
-        Promise.all([
-          translateText(dado[0].description),
-          translateText(dado[0].genres)
-      ]).then(([translatedDescription, translatedGenres]) => {
-          animeDescription.innerHTML = translatedDescription;
-          animeGenres.innerHTML = `<b>Gêneros:</b> ${translatedGenres}`;
-      }).catch(error => {
-          console.error(error);
-          animeDescription.innerHTML = dado[0].description;
-          animeGenres.innerHTML = `<b>Gêneros:</b> ${dado[0].genres}`;
-      });
+      //   Promise.all([
+      //     translateText(dado[0].description),
+      //     translateText(dado[0].genres)
+      // ]).then(([translatedDescription, translatedGenres]) => {
+      //     animeDescription.innerHTML = translatedDescription;
+      //     animeGenres.innerHTML = `<b>Gêneros:</b> ${translatedGenres}`;
+      // }).catch(error => {
+      //     console.error(error);
+      //     animeDescription.innerHTML = dado[0].description;
+      //     animeGenres.innerHTML = `<b>Gêneros:</b> ${dado[0].genres}`;
+      // });
       
       } else {
         //Tratamento quando a requisição não gerou erro mas nada foi encontrado
